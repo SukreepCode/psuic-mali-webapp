@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/mildronize/mali-server#readme",
   "dependencies": {
+    "bluebird": "^3.7.2",
     "express": "^4.17.1",
     "winston": "^3.3.3"
   },
