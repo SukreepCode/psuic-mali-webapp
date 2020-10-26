@@ -1,19 +1,20 @@
 const winston = require('winston');
+const { format } = winston;
 
+const formatConsole = format.printf(( { message, level, timestamp }: any ) => {
+  return `${timestamp} ${level}: ${message}`;
+});
+const formatFile = format.printf(( { message, level, timestamp }: any ) => {
+  return JSON.stringify({ message, level, timestamp });
+});
+
+var filename = module.filename.split('/').slice(-1);
 
 const logger = winston.createLogger({
   level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp({
-      format: 'YYYY-MM-dd HH:mm:ss Z'
-    }),
-    winston.format.printf( 
-        (info: any) => JSON.stringify({
-            message: info.message,
-            level: info.level,
-            timestamp: info.timestamp
-        })
-    )
+  format: format.combine(
+    format.timestamp({ format: 'YYYY-MM-dd HH:mm:ss Z' }),
+    formatFile
   ),
   transports: [
     //
@@ -22,7 +23,7 @@ const logger = winston.createLogger({
     //
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
     new winston.transports.File({ filename: 'combined.log' }),
-    
+
   ],
 });
 
@@ -34,23 +35,22 @@ const logger = winston.createLogger({
 if (process.env.NODE_ENV !== 'production') {
   logger.add(new winston.transports.Console({
     level: 'debug',
-    format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.timestamp({
-          format: 'YYYY-MM-DD HH:mm:ss'
-        }),
-        winston.format.printf( (info: any) => `${info.timestamp} ${info.level}: ${info.message}`)
-      ),
+    format: format.combine(
+      format.colorize(),
+      format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+      format.label({ label: filename }),
+      formatConsole
+    ),
   }));
 }
 
-const testLogger = ()=> {
-    logger.error('error message');
-    logger.warn('warn message');
-    logger.info('info message');
-    logger.verbose('verbose message');
-    logger.debug('debug message');
-    logger.silly('silly message');
+const testLogger = () => {
+  logger.error('error message');
+  logger.warn('warn message');
+  logger.info('info message');
+  logger.verbose('verbose message');
+  logger.debug('debug message');
+  logger.silly('silly message');
 }
 
 // testLogger();
