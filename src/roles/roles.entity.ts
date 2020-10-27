@@ -1,13 +1,13 @@
 import { UsersEntity } from '../users/users.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 
 @Entity()
-export class Roles {
+export class RolesEntity {
 
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  name: string;
 
-  @Column({ length: 30 })
+  @Column({nullable: true})
   title: string;
 
   // @OneToOne(

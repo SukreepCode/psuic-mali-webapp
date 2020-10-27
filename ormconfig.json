@@ -8,7 +8,7 @@
         ],
         "synchronize": false,
         "migrations": [
-            "src/migrations/*{.ts,.js}"
+            "dist/migrations/*{.ts,.js}"
         ],
         "migrationsTableName": "migrations_typeorm",
         "migrationsRun": true,
