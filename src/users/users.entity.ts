@@ -1,12 +1,18 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToOne,
+} from "typeorm";
+import { Roles } from "../roles/roles.entity";
 
 @Entity()
-export class UserEntity {
-
+export class UsersEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ length: 50 })
   displayID: string;
 
   @Column({ length: 255 })
@@ -15,7 +21,12 @@ export class UserEntity {
   @Column({ length: 255 })
   email: string;
 
-  @Column({ length: 255 })
-  password: string;
+  // @Column({ length: 255, nullable: true })
+  // password: string;
 
+  // @OneToOne(
+  //   (type) => Roles,
+  //   (item) => item.id
+  // )
+  // role: Roles;
 }

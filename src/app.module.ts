@@ -8,12 +8,7 @@ import { RolesModule } from './roles/roles.module';
  
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: './app.sqlite',
-      autoLoadEntities: true,
-      synchronize: process.env.NODE_ENV != 'production',
-    }),
+    TypeOrmModule.forRoot(),
     AlbumsModule,
     UsersModule,
     RolesModule,
