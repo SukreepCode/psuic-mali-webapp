@@ -2,7 +2,7 @@
 .env
 
 # Sqlite File
-.sqlite
+*.sqlite
 
 # compiled output
 /dist
