@@ -1,8 +1,8 @@
 export const RolesSeed = [
-    {
-        id: "student",
-    },
-    {
-        id: "teacher",
-    }
+  {
+    id: 'student',
+  },
+  {
+    id: 'teacher',
+  },
 ];

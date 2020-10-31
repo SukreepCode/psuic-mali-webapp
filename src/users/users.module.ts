@@ -9,7 +9,6 @@ import { AuthenticationModule } from './authentication/authentication.module';
 @Module({
   imports: [TypeOrmModule.forFeature([UsersEntity]), AuthenticationModule],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService],
 })
 export class UsersModule {}
-
