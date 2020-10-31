@@ -17,16 +17,19 @@ export class UsersEntity {
   id: number;
 
   @Column({ length: 50, nullable: true })
-  displayID: string;
+  displayID?: string;
 
   @Column({ length: 255, nullable: true })
-  name: string;
+  name?: string;
 
   @Column({ length: 255 })
   email: string;
 
-  // @Column({ length: 255, nullable: true })
-  // password: string;
+  @Column({ default: false })
+  admin: boolean;
+
+  @Column()
+  password: string;
 
   // @ManyToMany(type => RolesEntity)
   // @JoinTable()
