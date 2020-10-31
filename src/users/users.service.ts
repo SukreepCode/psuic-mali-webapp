@@ -18,8 +18,8 @@ export class UsersService {
     return await this.repo.findOne({ id });
   }
 
-  async findByEmail(email: string): Promise<UsersEntity> {
-    return await this.repo.findOne({ email });
+  async findByUsername(username: string): Promise<UsersEntity> {
+    return await this.repo.findOne({ username });
   }
 
   async findAll(): Promise<UsersEntity[]> {

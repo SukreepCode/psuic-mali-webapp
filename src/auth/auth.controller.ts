@@ -21,10 +21,10 @@ export class AuthController {
 
   @Post('/signup')
   public async signUp(@Body() newUser: CreateUserDto) {
-    const findUser = await this.usersService.findByEmail(newUser.email);
+    const findUser = await this.usersService.findByUsername(newUser.username);
     if (findUser) {
       return new HttpException(
-        { status: HttpStatus.CONFLICT, message: `The email: ${newUser.email} is existing.` },
+        { status: HttpStatus.CONFLICT, message: `The username: ${newUser.username} is existing.` },
         HttpStatus.CONFLICT,
       );
     }

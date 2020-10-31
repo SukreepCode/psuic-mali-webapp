@@ -27,7 +27,7 @@ export class UsersEntity {
   name?: string;
 
   @Column({ length: 255 })
-  email: string;
+  username: string;
 
   @Column({ default: false })
   admin: boolean;
