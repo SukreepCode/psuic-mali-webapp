@@ -7,4 +7,6 @@ export class EvaluationEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
+
+    
 }

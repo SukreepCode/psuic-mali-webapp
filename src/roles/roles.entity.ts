@@ -11,13 +11,4 @@ export class RolesEntity {
   @Column({ nullable: true })
   title: string;
 
-  // @OneToOne(
-  //   (type) => UsersEntity,
-  //   (item) => item.id
-  // )
-  @OneToMany(
-    () => UsersEntity,
-    (item) => item.id,
-  )
-  user: UsersEntity[];
 }
