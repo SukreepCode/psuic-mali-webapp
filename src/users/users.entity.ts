@@ -5,10 +5,10 @@ import {
   ManyToOne,
   OneToOne,
 } from "typeorm";
-import { Roles } from "../roles/roles.entity";
+import { RolesEntity } from "../roles/roles.entity";
 
 @Entity()
-export class Users {
+export class UsersEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,9 +24,6 @@ export class Users {
   // @Column({ length: 255, nullable: true })
   // password: string;
 
-  // @OneToOne(
-  //   (type) => Roles,
-  //   (item) => item.id
-  // )
-  // role: Roles;
+  @OneToOne(type => RolesEntity)
+  role: RolesEntity;
 }

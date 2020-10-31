@@ -11,7 +11,7 @@ import {
   } from '@nestjs/common';
   import { UsersService } from './users.service';
   import { CreateUserDto } from './dto/createUser.dto';
-  import { Users } from './users.entity';
+  import { UsersEntity } from './users.entity';
   
   @Controller('users')
   export class UsersController {
@@ -20,7 +20,7 @@ import {
     @Post() // POST /albums
     @HttpCode(HttpStatus.CREATED)
     async createAlbum(@Body() newItem: CreateUserDto): Promise<any> {
-      const user = new Users();
+      const user = new UsersEntity();
       user.displayID = newItem.displayID;
       user.name = newItem.name;
       user.email = newItem.email;
@@ -29,12 +29,12 @@ import {
     }
   
     @Get() // GET /users
-    async findAlbums(): Promise<Users[]> {
+    async findAlbums(): Promise<UsersEntity[]> {
       return await this.usersService.findAll();
     }
   
     @Get(':id') // GET /users/123
-    async findAlbum(@Param('id') id: number): Promise<Users> {
+    async findAlbum(@Param('id') id: number): Promise<UsersEntity> {
       return await this.usersService.findOne(id);
     }
   
@@ -42,7 +42,7 @@ import {
     async updateAlbum(
       @Param('id') id: number,
       @Body() newItem: CreateUserDto,
-    ): Promise<Users> {
+    ): Promise<UsersEntity> {
       const user = await this.usersService.findOne(id);
       user.displayID = newItem.displayID;
       user.name = newItem.name;
