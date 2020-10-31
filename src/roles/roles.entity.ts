@@ -10,5 +10,4 @@ export class RolesEntity {
 
   @Column({ nullable: true })
   title: string;
-
 }

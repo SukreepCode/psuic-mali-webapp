@@ -6,7 +6,7 @@ import { UsersModule } from '../users/users.module';
 import { RolesModule } from '../roles/roles.module';
 import { CriteriaModule } from '../criteria/criteria.module';
 import { EvaluationModule } from '../evaluation/evaluation.module';
-import { SemestersModule } from "../semesters/semesters.module";
+import { SemestersModule } from '../semesters/semesters.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot(), UsersModule, RolesModule, CriteriaModule, EvaluationModule, SemestersModule],

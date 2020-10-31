@@ -1,3 +1,4 @@
+import { EnrollEntity } from 'src/enroll/enroll.entity';
 import {
   Entity,
   Column,
@@ -8,6 +9,9 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  CreateDateColumn,
+  UpdateDateColumn,
+
 } from 'typeorm';
 import { RolesEntity } from '../roles/roles.entity';
 
@@ -40,4 +44,14 @@ export class UsersEntity {
     (item) => item.id,
   )
   role: RolesEntity;
+
+  @OneToMany((type) => EnrollEntity, (enroll) => enroll.id)
+  enroll: EnrollEntity;
+
+  // For MySQL
+  // @CreateDateColumn({ type: "timestamp" })
+  // createdAt: Date;
+
+  // @UpdateDateColumn({ type: "timestamp" })
+  // updatedAt: Date;
 }

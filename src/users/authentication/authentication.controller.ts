@@ -21,7 +21,7 @@ export class AuthenticationController {
     }
     const createUser = {
       ...newUser,
-      role: "student"
+      role: 'student',
     };
 
     const user: UsersEntity = assignObject(new UsersEntity(), createUser);
