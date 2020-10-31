@@ -12,7 +12,7 @@ import {
   import { UsersService } from './users.service';
   import { CreateUserDto } from './users.dto';
   import { UsersEntity } from './users.entity';
-  import { assignObject }from '../utils';
+  import { assignObject }from '../app/utils';
   
   @Controller('users')
   export class UsersController {

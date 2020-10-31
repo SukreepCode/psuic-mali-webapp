@@ -1,7 +1,7 @@
 import { Controller, Post, Body, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { UsersService } from '../users.service';
 import {CreateUserDto} from '../users.dto';
-import { assignObject }from '../../utils';
+import { assignObject }from '../../app/utils';
 import { UsersEntity } from '../users.entity';
 
 @Controller('authentication')
