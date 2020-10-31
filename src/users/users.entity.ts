@@ -34,7 +34,7 @@ export class UsersEntity {
 
   @ManyToOne(
     () => RolesEntity,
-    item => item.id,
+    (item) => item.id,
   )
   role: RolesEntity;
 }

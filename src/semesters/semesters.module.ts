@@ -4,6 +4,6 @@ import { SemestersService } from './semesters.service';
 
 @Module({
   controllers: [SemestersController],
-  providers: [SemestersService]
+  providers: [SemestersService],
 })
 export class SemestersModule {}
