@@ -1,13 +1,13 @@
 import {
   Controller, Post, Body, HttpException, HttpStatus, Logger,
 } from '@nestjs/common';
-import { UsersService } from '../users.service';
-import { CreateUserDto } from '../users.dto';
-import { assignObject } from '../../app/utils';
-import { UsersEntity } from '../users.entity';
+import { UsersService } from '../users/users.service';
+import { CreateUserDto } from '../users/users.dto';
+import { assignObject } from '../app/utils';
+import { UsersEntity } from '../users/users.entity';
 
-@Controller('authentication')
-export class AuthenticationController {
+@Controller('auth')
+export class AuthController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('/signup')

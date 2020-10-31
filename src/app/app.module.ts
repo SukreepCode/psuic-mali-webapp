@@ -7,9 +7,10 @@ import { RolesModule } from '../roles/roles.module';
 import { CriteriaModule } from '../criteria/criteria.module';
 import { EvaluationModule } from '../evaluation/evaluation.module';
 import { SemestersModule } from '../semesters/semesters.module';
+import { AuthModule} from '../auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule, RolesModule, CriteriaModule, EvaluationModule, SemestersModule],
+  imports: [TypeOrmModule.forRoot(), UsersModule, RolesModule, CriteriaModule, EvaluationModule, SemestersModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
