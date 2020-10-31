@@ -10,48 +10,45 @@ import {
     HttpCode,
   } from '@nestjs/common';
   import { UsersService } from './users.service';
-  import { CreateUserDto } from './dto/createUser.dto';
+  import { CreateUserDto } from './users.dto';
   import { UsersEntity } from './users.entity';
+  import { assignObject }from '../utils';
   
   @Controller('users')
   export class UsersController {
+
     constructor(private readonly usersService: UsersService) {}
   
     @Post() // POST /albums
     @HttpCode(HttpStatus.CREATED)
-    async createAlbum(@Body() newItem: CreateUserDto): Promise<any> {
-      const user = new UsersEntity();
-      user.displayID = newItem.displayID;
-      user.name = newItem.name;
-      user.email = newItem.email;
+    async create(@Body() newItem: CreateUserDto): Promise<any> {      
+      const user: UsersEntity = assignObject(new UsersEntity(), newItem);
       const createdUser = await this.usersService.createOrUpdate(user);
       return { success: true, id: createdUser.id };
     }
   
     @Get() // GET /users
-    async findAlbums(): Promise<UsersEntity[]> {
+    async findAll(): Promise<UsersEntity[]> {
       return await this.usersService.findAll();
     }
   
     @Get(':id') // GET /users/123
-    async findAlbum(@Param('id') id: number): Promise<UsersEntity> {
-      return await this.usersService.findOne(id);
+    async find(@Param('id') id: number): Promise<UsersEntity> {
+      return await this.usersService.findById(id);
     }
   
     @Put(':id') // PUT /users/123
-    async updateAlbum(
+    async update(
       @Param('id') id: number,
       @Body() newItem: CreateUserDto,
     ): Promise<UsersEntity> {
-      const user = await this.usersService.findOne(id);
-      user.displayID = newItem.displayID;
-      user.name = newItem.name;
-      user.email = newItem.email;
+      let user = await this.usersService.findById(id);
+      user = assignObject(user, newItem);
       return await this.usersService.createOrUpdate(user);
     }
   
     @Delete(':id')  // DELETE /users/123
-    async deleteAlbum(@Param('id') id: number): Promise<any> {
+    async delete(@Param('id') id: number): Promise<any> {
       await this.usersService.delete(id);
       return { success: true };
     }

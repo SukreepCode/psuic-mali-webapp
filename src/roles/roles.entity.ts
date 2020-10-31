@@ -1,11 +1,11 @@
 import { UsersEntity } from '../users/users.entity';
-import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, OneToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class RolesEntity {
 
   @PrimaryColumn()
-  name: string;
+  id: string;
 
   @Column({nullable: true})
   title: string;
@@ -14,6 +14,7 @@ export class RolesEntity {
   //   (type) => UsersEntity,
   //   (item) => item.id
   // )
-  // user: UsersEntity;
+  @OneToMany(() => UsersEntity, item => item.id)
+  user: UsersEntity[];
 
 }

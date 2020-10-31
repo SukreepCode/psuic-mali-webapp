@@ -14,8 +14,12 @@ export class UsersService {
     return await this.repo.save(user);
   }
 
-  async findOne(id: number): Promise<UsersEntity> {
+  async findById(id: number): Promise<UsersEntity> {
     return await this.repo.findOne({ id });
+  }
+
+  async findByEmail(email: string): Promise<UsersEntity> {
+    return await this.repo.findOne({ email });
   }
 
   async findAll(): Promise<UsersEntity[]> {

@@ -1,4 +1,4 @@
-import { CreateUserDto } from './createUser.dto';
+import { CreateUserDto } from './users.dto';
 
 describe('CreateUserDto', () => {
   it('should be defined', () => {
