@@ -13,7 +13,7 @@
         "migrationsTableName": "migrations_typeorm",
         "migrationsRun": true,
         "cli": {
-            "migrationsDir": "src/migrations"
+            "migrationsDir": "src/app/migrations"
         }
     }
 ]
