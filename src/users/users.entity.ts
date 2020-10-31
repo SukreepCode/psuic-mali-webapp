@@ -5,10 +5,10 @@ import {
   ManyToOne,
   OneToOne,
 } from "typeorm";
-import { RolesEntity } from "../roles/roles.entity";
+import { Roles } from "../roles/roles.entity";
 
 @Entity()
-export class UsersEntity {
+export class Users {
   @PrimaryGeneratedColumn()
   id: number;
 
