@@ -15,7 +15,7 @@ export class UsersService {
   }
 
   async findOne(id: number): Promise<Users> {
-    return await this.repo.findOne({ id: id });
+    return await this.repo.findOne({ id });
   }
 
   async findAll(): Promise<Users[]> {
@@ -23,6 +23,6 @@ export class UsersService {
   }
 
   async delete(id: number): Promise<DeleteResult> {
-    return await this.repo.delete({ id: id });
+    return await this.repo.delete({ id });
   }
 }

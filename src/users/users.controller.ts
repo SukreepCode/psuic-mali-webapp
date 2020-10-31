@@ -10,7 +10,7 @@ import {
     HttpCode,
   } from '@nestjs/common';
   import { UsersService } from './users.service';
-  import { CreateUserDto } from './dto/create-user.dto';
+  import { CreateUserDto } from './dto/createUser.dto';
   import { Users } from './users.entity';
   
   @Controller('users')
