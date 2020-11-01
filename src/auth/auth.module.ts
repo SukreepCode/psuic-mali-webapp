@@ -18,7 +18,7 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '1800s' },
     })],
   controllers: [AuthController],
   providers: [UsersService, AuthService, LocalStrategy, JwtStrategy],
