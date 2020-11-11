@@ -7,8 +7,28 @@ import { AppModule } from './app/app.module';
 import * as path from 'path';
 import * as exphbs from 'express-handlebars';
 
+import * as session from 'express-session';
+import flash = require('connect-flash');
+import * as passport from 'passport';
+
 import * as livereloadMiddleware from 'connect-livereload';
 import * as livereload from 'livereload';
+
+const sessionSecret = "mysecret"; // Do not use in the production
+
+function setupPassportSession(app: any){
+  app.use(
+    session({
+      secret: sessionSecret,
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(flash());
+}
 
 function setupSwagger(app: any) {
   const options = new DocumentBuilder()
@@ -81,6 +101,11 @@ async function bootstrap() {
    */
   setupSwagger(app);
 
+  /**
+   * setupPassportSession
+   */
+  setupPassportSession(app);
+
   await app.listen(4000);
 
   /**
@@ -91,9 +116,5 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-
-  /**
-   * Livereload
-   */
 }
 bootstrap();

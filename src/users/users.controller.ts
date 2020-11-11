@@ -4,11 +4,11 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './users.dto';
 import { UsersEntity } from './users.entity';
-import { assignObject } from '../app/utils';
+import { assignObject } from '../common/utils';
 
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard, Roles } from '../app/roles';
+import { RolesGuard, Roles } from '../common/roles';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard, RolesGuard)
