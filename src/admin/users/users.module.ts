@@ -4,7 +4,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
 import { UsersEntity } from './users.entity';
-import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
+import { AuthGuard } from '../../common/guards/authenticated.guard';
 import { APP_GUARD } from '@nestjs/core';
 
 @Module({
@@ -12,7 +12,7 @@ import { APP_GUARD } from '@nestjs/core';
   controllers: [UsersController],
   providers: [
     UsersService,
-    // { provide: APP_GUARD, useClass: AuthenticatedGuard }
+    // { provide: APP_GUARD, useClass: AuthGuard }
   ],
 })
 export class UsersModule {}

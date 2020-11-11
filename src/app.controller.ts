@@ -2,7 +2,7 @@ import { Controller, Get, Post, Res, Render, UseGuards, Request, UseFilters } fr
 import { Response } from 'express';
 
 import { LoginGuard } from './common/guards/login.guard';
-import { AuthenticatedGuard } from './common/guards/authenticated.guard';
+import { AuthGuard } from './common/guards/authenticated.guard';
 import { AuthExceptionFilter } from './common/filters/auth-exceptions.filter';
 
 @Controller()
@@ -15,14 +15,14 @@ export class AppController {
     res.redirect('/auth/login');
   }
   
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthGuard)
   @Get('/app')
   @Render('home')
   getHome(@Request() req) {
     return { user: req.user };
   }
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthGuard)
   @Get('/profile')
   @Render('profile')
   getProfile(@Request() req) {
