@@ -4,8 +4,11 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app/app.module';
 
-import { join } from 'path';
+import * as path from 'path';
 import * as exphbs from 'express-handlebars';
+
+import * as livereloadMiddleware from 'connect-livereload';
+import * as livereload from 'livereload';
 
 function setupSwagger(app: any) {
   const options = new DocumentBuilder()
@@ -18,20 +21,55 @@ function setupSwagger(app: any) {
   SwaggerModule.setup('api', app, document);
 }
 
+function setupLiveReload(app: any, liveReloadPort: number = 35729) {
+  // Create a livereload server
+  const hotServer = livereload.createServer({
+    port: liveReloadPort,
+    // Reload on changes to these file extensions.
+    exts: ['hbs'],
+    // Print debug info
+    debug: false,
+  });
+
+  console.log(path.join(__dirname, '../public/views'));
+
+  // Specify the folder to watch for file-changes.
+  hotServer.watch(path.join(__dirname, '../public/views'));
+  app.use(
+    livereloadMiddleware({
+      port: liveReloadPort,
+    }),
+  );
+}
+
+
+function setupView(app: any, liveReloadPort?: number){
+  const viewsPath = path.join(__dirname, '../public/views');
+  app.engine(
+    '.hbs',
+    exphbs({
+      extname: '.hbs',
+      defaultLayout: 'main',
+      helpers: {
+        liveReloadPort,
+      },
+    }),
+  );
+  app.set('views', viewsPath);
+  app.set('view engine', '.hbs');
+}
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-
   /**
-   * Setup view 
+   * Setup view for Express and live reload
    */
+  let liveReloadPort = 35729;
 
-  const viewsPath = join(__dirname, '../public/views');
-  app.engine('.hbs', exphbs({ extname: '.hbs', defaultLayout: 'main' }));
-  app.set('views', viewsPath);
-  app.set('view engine', '.hbs');
+  setupView(app, liveReloadPort);
+  setupLiveReload(app, liveReloadPort);
 
   /**
    * Global pip for request body validation
@@ -53,5 +91,9 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
+
+  /**
+   * Livereload
+   */
 }
 bootstrap();
