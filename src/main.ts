@@ -3,6 +3,8 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe , HttpAdapterHost} from '@nestjs/common';
 import { AppModule } from './app.module';
+import * as express from 'express';
+
 import {AllExceptionsFilter} from './auth/all-exceptions.filter';
 
 import * as path from 'path';
@@ -19,11 +21,21 @@ let liveReloadPort = 35729;
 const sessionSecret = 'mysecret'; // Do not use in the production
 
 function setupPassportSession(app: any) {
+
+  var expiryDate = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
+
   app.use(
     session({
       secret: sessionSecret,
       resave: false,
       saveUninitialized: false,
+      // cookie: {
+      //   // secure: true,
+      //   // httpOnly: true,
+      //   // domain: 'example.com',
+      //   // path: 'foo/bar',
+      //   expires: expiryDate
+      // }
     }),
   );
 
@@ -43,7 +55,7 @@ function setupSwagger(app: any) {
   SwaggerModule.setup('api', app, document);
 }
 
-function setupLiveReload(app: any, liveReloadPort: number = 35729) {
+function setupLiveReload(app: any, viewPrefixPath: string, liveReloadPort: number = 35729) {
   // Create a livereload server
   const hotServer = livereload.createServer({
     port: liveReloadPort,
@@ -54,7 +66,8 @@ function setupLiveReload(app: any, liveReloadPort: number = 35729) {
   });
 
   // Specify the folder to watch for file-changes.
-  hotServer.watch(path.join(__dirname, '../public/views'));
+
+  hotServer.watch(path.join(__dirname, viewPrefixPath));
   app.use(
     livereloadMiddleware({
       port: liveReloadPort,
@@ -62,20 +75,22 @@ function setupLiveReload(app: any, liveReloadPort: number = 35729) {
   );
 }
 
-function setupView(app: any, liveReloadPort?: number) {
-  app.engine(
+
+function setupView(app: any, viewPrefixPath: string, liveReloadPort?: number) {
+ app.engine(
     '.hbs',
     exphbs({
       extname: '.hbs',
       defaultLayout: 'main',
-      layoutsDir: path.join(__dirname, '../public/views/layouts/'),
-      partialsDir: path.join(__dirname, '../public/views/partials/'),
+      layoutsDir: path.join(__dirname, viewPrefixPath + '/layouts'),
+      partialsDir: path.join(__dirname, viewPrefixPath + '/partials'),
       helpers: {
         liveReloadPort,
       },
     }),
   );
-  app.set('views', path.join(__dirname, '../public/views'));
+  // app.use(express.static(path.join(__dirname, "../public")));
+  app.set('views', path.join(__dirname, viewPrefixPath));
   app.set('view engine', '.hbs');
 }
 declare const module: any;
@@ -87,9 +102,9 @@ async function bootstrap() {
    * Setup view for Express and live reload
    */
   
-
-  setupView(app, liveReloadPort);
-  setupLiveReload(app, liveReloadPort);
+  const viewPrefixPath = process.env.DEV_ENV === 'hotreload' ?  '../public/views' : '../../public/views';
+  setupView(app, viewPrefixPath, liveReloadPort);
+  setupLiveReload(app, viewPrefixPath, liveReloadPort);
 
   /**
    * Global pip for request body validation
@@ -100,7 +115,7 @@ async function bootstrap() {
    * Global Exception Filter for catching everything
    * https://docs.nestjs.com/exception-filters
    */
-  // const httpAdapter = app.getHttpAdapter;
+
   app.useGlobalFilters(new AllExceptionsFilter());
   /**
    * Setup swagger api

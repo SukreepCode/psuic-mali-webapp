@@ -30,7 +30,7 @@ export class AuthController {
   @Render('error')
   error(@Request() req) {
     const errorMessage = req.flash('all_exception_message')[0];
-    console.log(errorMessage);
+    // console.log(errorMessage);
     return { ...errorMessage };
   }
 

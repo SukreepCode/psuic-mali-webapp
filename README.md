@@ -66,3 +66,4 @@ npm run typeorm -- migration:revert
 
 
 https://dev.to/nestjs/authentication-and-sessions-for-mvc-apps-with-nestjs-55a4
+https://www.freecodecamp.org/news/express-js-security-tips/

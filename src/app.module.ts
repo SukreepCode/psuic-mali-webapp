@@ -29,7 +29,6 @@ import { CriteriaEntity } from './admin/criteria/criteria.entity';
 import { EvaluationEntity } from './admin/evaluation/evaluation.entity';
 import { SemestersEntity } from './admin/semesters/semesters.entity';
 import { EnrollEntity } from './admin/enroll/enroll.entity';
-import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -47,13 +46,12 @@ import { AdminModule } from './admin/admin.module';
       },
       keepConnectionAlive: true,
     }),
-    // UsersModule,
-    // RolesModule,
-    // CriteriaModule,
-    // EvaluationModule,
-    // SemestersModule,
+    UsersModule,
+    RolesModule,
+    CriteriaModule,
+    EvaluationModule,
+    SemestersModule,
     AuthModule,
-    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],
