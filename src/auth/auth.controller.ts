@@ -2,7 +2,7 @@ import { Controller, Get, Post, Res, Render, UseGuards, Request, UseFilters } fr
 import { Response } from 'express';
 
 import { LoginGuard } from '../common/guards/login.guard';
-import { AuthGuard } from '../common/guards/authenticated.guard';
+import { AuthGuard } from '../common/guards/auth.guard';
 import { AuthExceptionFilter } from '../common/filters/auth-exceptions.filter';
 
 @Controller('auth')
