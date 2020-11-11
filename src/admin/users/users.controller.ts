@@ -1,5 +1,5 @@
 import {
-  Controller, Post, Body, Get, Put, Delete, Param, HttpStatus, HttpCode, UseGuards
+  Controller, Post, Body, Get, Put, Delete, Param,UseFilters, HttpStatus, HttpCode, UseGuards
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './users.dto';
@@ -8,11 +8,13 @@ import { assignObject } from '../../common/utils';
 
 // import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { AuthGuard } from '@nestjs/passport';
+import { AdminGuard } from '../admin.guard';
+import {AuthExceptionFilter} from '../../common/filters/auth-exceptions.filter';
 // import { RolesGuard, Roles } from '../../common/roles';
 
+// @UseFilters(AuthExceptionFilter)
+@UseGuards(AdminGuard)
 @Controller('users')
-// @UseGuards(JwtAuthGuard, RolesGuard)
-// @UseGuards(RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 

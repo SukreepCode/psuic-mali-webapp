@@ -2,7 +2,6 @@ import { Controller, Get, Post, Res, Render, UseGuards, Request, UseFilters } fr
 import { Response } from 'express';
 
 import { LoginGuard } from '../common/guards/login.guard';
-import { AuthGuard } from '../common/guards/auth.guard';
 import { AuthExceptionFilter } from '../common/filters/auth-exceptions.filter';
 
 @Controller('auth')
@@ -26,4 +25,13 @@ export class AuthController {
     req.logout();
     res.redirect('/');
   }
+
+  @Get('/error')
+  @Render('error')
+  error(@Request() req) {
+    const errorMessage = req.flash('all_exception_message')[0];
+    console.log(errorMessage);
+    return { ...errorMessage };
+  }
+
 }

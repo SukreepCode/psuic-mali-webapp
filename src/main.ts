@@ -1,8 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe , HttpAdapterHost} from '@nestjs/common';
 import { AppModule } from './app.module';
+import {AllExceptionsFilter} from './auth/all-exceptions.filter';
 
 import * as path from 'path';
 import * as exphbs from 'express-handlebars';
@@ -14,6 +15,7 @@ import * as passport from 'passport';
 import * as livereloadMiddleware from 'connect-livereload';
 import * as livereload from 'livereload';
 
+let liveReloadPort = 35729;
 const sessionSecret = 'mysecret'; // Do not use in the production
 
 function setupPassportSession(app: any) {
@@ -52,7 +54,7 @@ function setupLiveReload(app: any, liveReloadPort: number = 35729) {
   });
 
   // Specify the folder to watch for file-changes.
-  hotServer.watch(path.join(__dirname, 'views'));
+  hotServer.watch(path.join(__dirname, '../public/views'));
   app.use(
     livereloadMiddleware({
       port: liveReloadPort,
@@ -84,7 +86,7 @@ async function bootstrap() {
   /**
    * Setup view for Express and live reload
    */
-  let liveReloadPort = 35729;
+  
 
   setupView(app, liveReloadPort);
   setupLiveReload(app, liveReloadPort);
@@ -94,6 +96,12 @@ async function bootstrap() {
    */
   app.useGlobalPipes(new ValidationPipe());
 
+  /**
+   * Global Exception Filter for catching everything
+   * https://docs.nestjs.com/exception-filters
+   */
+  // const httpAdapter = app.getHttpAdapter;
+  app.useGlobalFilters(new AllExceptionsFilter());
   /**
    * Setup swagger api
    */
@@ -111,9 +119,12 @@ async function bootstrap() {
    */
 
   if (module.hot) {
-    // liveReloadPort += 1;
+   
     module.hot.accept();
-    module.hot.dispose(() => app.close());
+    module.hot.dispose(() => {
+      app.close()
+      liveReloadPort += 1;
+    });
   }
 }
 bootstrap();
