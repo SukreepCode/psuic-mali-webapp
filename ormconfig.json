@@ -6,9 +6,9 @@
         "entities": [
             "dist/**/*.entity{ .ts,.js}"
         ],
-        "synchronize": false,
+        "synchronize": true,
         "migrations": [
-            "dist/migrations/*{.ts,.js}"
+            "dist/app/migrations/*{.ts,.js}"
         ],
         "migrationsTableName": "migrations_typeorm",
         "migrationsRun": true,

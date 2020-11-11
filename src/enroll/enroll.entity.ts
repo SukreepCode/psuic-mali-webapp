@@ -1,5 +1,5 @@
-import { SemestersEntity } from 'src/semesters/semesters.entity';
-import { UsersEntity } from 'src/users/users.entity';
+import { SemestersEntity } from '../semesters/semesters.entity';
+import { UsersEntity } from '../users/users.entity';
 import {
   Entity,
   Column,

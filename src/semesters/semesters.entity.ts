@@ -1,4 +1,4 @@
-import { EnrollEntity } from 'src/enroll/enroll.entity';
+import { EnrollEntity } from '../enroll/enroll.entity';
 import {
   Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, OneToOne, OneToMany,
 } from 'typeorm';
