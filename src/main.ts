@@ -9,7 +9,6 @@ import {AllExceptionsFilter} from './auth/all-exceptions.filter';
 
 import * as path from 'path';
 import * as exphbs from 'express-handlebars';
-// import * as sassMiddleware from 'node-sass-middleware';
 
 import * as session from 'express-session';
 import flash = require('connect-flash');
@@ -47,22 +46,6 @@ function setupPassportSession(app: any) {
   app.use(flash());
 }
 
-// function setupSassComplier(app: any){
-//   const sassPath =path.join(__dirname, "../../public/styles");
-//   var sassMiddleware = require('node-sass-middleware');
-//   console.log(sassPath);
-//   app.use(
-//     sassMiddleware({
-//       src: sassPath,
-//       dest: sassPath,
-//       indentedSyntax: false, // true = .sass and false = .scss
-//       sourceMap: true,
-//       debug: true,
-//       log: function (severity, key, value) { console.log(severity + 'node-saas-middleware   %s : %s' + key + value); }
-
-//     })
-//   );
-// }
 
 function setupSwagger(app: any) {
   const options = new DocumentBuilder()
@@ -80,14 +63,14 @@ function setupLiveReload(app: any, viewPrefixPath: string, liveReloadPort: numbe
   const hotServer = livereload.createServer({
     port: liveReloadPort,
     // Reload on changes to these file extensions.
-    exts: ['hbs'],
+    exts: ['hbs', 'scss'],
     // Print debug info
     debug: false,
   });
 
   // Specify the folder to watch for file-changes.
-
-  hotServer.watch(path.join(__dirname, viewPrefixPath));
+  const viewPath = path.join(__dirname, viewPrefixPath);
+  hotServer.watch(path.join(viewPath, '../'));
   app.use(
     livereloadMiddleware({
       port: liveReloadPort,
@@ -109,7 +92,7 @@ function setupView(app: any, viewPrefixPath: string, liveReloadPort?: number) {
       },
     }),
   );
-  // app.use(express.static(path.join(__dirname, "../public")));
+
   app.set('views', path.join(__dirname, viewPrefixPath));
   app.set('view engine', '.hbs');
   app.use(express.static(path.join(__dirname, '../../public')));

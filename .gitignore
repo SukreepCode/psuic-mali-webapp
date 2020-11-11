@@ -6,7 +6,10 @@
 
 # compiled output
 /dist
-/node_modules
+node_modules
+
+# compiled output from node sass
+/public/assets
 
 # Logs
 logs
