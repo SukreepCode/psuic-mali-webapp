@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersService } from '../users/users.service';
+import { UsersService } from '../admin/users/users.service';
 import {AuthController} from './auth.controller';
 
-import { UsersEntity } from '../users/users.entity';
-import { UsersModule } from '../users/users.module';
+import { UsersEntity } from '../admin/users/users.entity';
+import { UsersModule } from '../admin/users/users.module';
 import { AuthService } from './auth.service';
-import { LocalStrategy } from './strategies/local.strategy';
+import { LocalStrategy } from '../admin/strategies/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constant';
-import { JwtStrategy } from './strategies/jwt.strategy';
+import { JwtStrategy } from '../admin/strategies/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { SessionSerializer } from './session.serializer';
 

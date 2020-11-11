@@ -1,6 +1,6 @@
 import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
 import { RolesSeed } from '../seeds/roles.seed';
-import { RolesEntity } from '../src/app/roles/roles.entity';
+import { RolesEntity } from '../src/admin/roles/roles.entity';
 
 // https://medium.com/@bansalsushil_34403/how-to-seed-typeorm-d9637a5948cc
 

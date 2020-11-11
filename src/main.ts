@@ -111,7 +111,7 @@ async function bootstrap() {
    */
 
   if (module.hot) {
-    liveReloadPort += 1;
+    // liveReloadPort += 1;
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }

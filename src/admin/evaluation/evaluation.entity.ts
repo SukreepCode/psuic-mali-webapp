@@ -1,6 +1,6 @@
-import { CriteriaEntity } from 'src/app/criteria/criteria.entity';
-import { SemestersEntity } from 'src/app/semesters/semesters.entity';
-import { UsersEntity } from 'src/app/users/users.entity';
+import { CriteriaEntity } from 'src/admin/criteria/criteria.entity';
+import { SemestersEntity } from 'src/admin/semesters/semesters.entity';
+import { UsersEntity } from 'src/admin/users/users.entity';
 import {
   Entity, Column, PrimaryColumn, PrimaryGeneratedColumn, ManyToOne, OneToMany,
 } from 'typeorm';

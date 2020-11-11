@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Res, Render, UseGuards, Request, UseFilters } from '@nestjs/common';
 import { Response } from 'express';
 
-import { LoginGuard } from '../../common/guards/login.guard';
-import { AuthenticatedGuard } from '../../common/guards/authenticated.guard';
-import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter';
+import { LoginGuard } from '../common/guards/login.guard';
+import { AuthenticatedGuard } from '../common/guards/authenticated.guard';
+import { AuthExceptionFilter } from '../common/filters/auth-exceptions.filter';
 
 @Controller('auth')
 @UseFilters(AuthExceptionFilter)

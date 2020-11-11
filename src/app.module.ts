@@ -6,29 +6,29 @@ import { AppService } from './app.service';
  * Data
  */
 
-import { UsersModule } from './app/users/users.module';
-import { RolesModule } from './app/roles/roles.module';
-import { CriteriaModule } from './app/criteria/criteria.module';
-import { EvaluationModule } from './app/evaluation/evaluation.module';
-import { SemestersModule } from './app/semesters/semesters.module';
+import { UsersModule } from './admin/users/users.module';
+import { RolesModule } from './admin/roles/roles.module';
+import { CriteriaModule } from './admin/criteria/criteria.module';
+import { EvaluationModule } from './admin/evaluation/evaluation.module';
+import { SemestersModule } from './admin/semesters/semesters.module';
 
 /**
  * Auth
  */
 
-import { AuthModule } from './app/auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 
 /**
  * Typeorm
  */
 
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersEntity } from './app/users/users.entity';
-import { RolesEntity } from './app/roles/roles.entity';
-import { CriteriaEntity } from './app/criteria/criteria.entity';
-import { EvaluationEntity } from './app/evaluation/evaluation.entity';
-import { SemestersEntity } from './app/semesters/semesters.entity';
-import { EnrollEntity } from './app/enroll/enroll.entity';
+import { UsersEntity } from './admin/users/users.entity';
+import { RolesEntity } from './admin/roles/roles.entity';
+import { CriteriaEntity } from './admin/criteria/criteria.entity';
+import { EvaluationEntity } from './admin/evaluation/evaluation.entity';
+import { SemestersEntity } from './admin/semesters/semesters.entity';
+import { EnrollEntity } from './admin/enroll/enroll.entity';
 
 @Module({
   imports: [
