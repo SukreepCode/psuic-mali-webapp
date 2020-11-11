@@ -1,5 +1,6 @@
 import { SemestersEntity } from '../semesters/semesters.entity';
 import { UsersEntity } from '../users/users.entity';
+import { RolesEntity } from '../roles/roles.entity';
 import {
   Entity,
   Column,
@@ -11,7 +12,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { RolesEntity } from '../roles/roles.entity';
+
 
 @Entity()
 export class EnrollEntity {

@@ -1,6 +1,6 @@
 import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
 import { UsersSeed } from '../seeds/users.seed';
-import { UsersEntity } from '../src/users/users.entity';
+import { UsersEntity } from '../src/app/users/users.entity';
 import { assignObject } from '../src/common/utils';
 
 export class initUsers1604146571657 implements MigrationInterface {

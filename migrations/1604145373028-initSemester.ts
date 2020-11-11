@@ -1,6 +1,6 @@
 import { getRepository, MigrationInterface, QueryRunner } from 'typeorm';
 import { SemestersSeed } from '../seeds/semesters.seed';
-import { SemestersEntity } from '../src/semesters/semesters.entity';
+import { SemestersEntity } from '../src/app/semesters/semesters.entity';
 
 export class initSemester1604145373028 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

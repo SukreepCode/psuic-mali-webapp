@@ -4,14 +4,14 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './users.dto';
 import { UsersEntity } from './users.entity';
-import { assignObject } from '../common/utils';
+import { assignObject } from '../../common/utils';
 
-import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+// import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard, Roles } from '../common/roles';
+// import { RolesGuard, Roles } from '../../common/roles';
 
 @Controller('users')
-@UseGuards(JwtAuthGuard, RolesGuard)
+// @UseGuards(JwtAuthGuard, RolesGuard)
 // @UseGuards(RolesGuard)
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
