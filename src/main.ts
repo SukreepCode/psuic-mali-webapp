@@ -9,6 +9,7 @@ import {AllExceptionsFilter} from './auth/all-exceptions.filter';
 
 import * as path from 'path';
 import * as exphbs from 'express-handlebars';
+// import * as sassMiddleware from 'node-sass-middleware';
 
 import * as session from 'express-session';
 import flash = require('connect-flash');
@@ -16,6 +17,8 @@ import * as passport from 'passport';
 
 import * as livereloadMiddleware from 'connect-livereload';
 import * as livereload from 'livereload';
+
+
 
 let liveReloadPort = 35729;
 const sessionSecret = 'mysecret'; // Do not use in the production
@@ -43,6 +46,23 @@ function setupPassportSession(app: any) {
   app.use(passport.session());
   app.use(flash());
 }
+
+// function setupSassComplier(app: any){
+//   const sassPath =path.join(__dirname, "../../public/styles");
+//   var sassMiddleware = require('node-sass-middleware');
+//   console.log(sassPath);
+//   app.use(
+//     sassMiddleware({
+//       src: sassPath,
+//       dest: sassPath,
+//       indentedSyntax: false, // true = .sass and false = .scss
+//       sourceMap: true,
+//       debug: true,
+//       log: function (severity, key, value) { console.log(severity + 'node-saas-middleware   %s : %s' + key + value); }
+
+//     })
+//   );
+// }
 
 function setupSwagger(app: any) {
   const options = new DocumentBuilder()
@@ -92,6 +112,7 @@ function setupView(app: any, viewPrefixPath: string, liveReloadPort?: number) {
   // app.use(express.static(path.join(__dirname, "../public")));
   app.set('views', path.join(__dirname, viewPrefixPath));
   app.set('view engine', '.hbs');
+  app.use(express.static(path.join(__dirname, '../../public')));
 }
 declare const module: any;
 
@@ -102,9 +123,11 @@ async function bootstrap() {
    * Setup view for Express and live reload
    */
   
-  const viewPrefixPath = process.env.DEV_ENV === 'hotreload' ?  '../public/views' : '../../public/views';
+  const viewPrefixPath = process.env.DEV_ENV === 'hotreload' ?  '../views/templates' : '../../views/templates';
+  // setupSassComplier(app);
   setupView(app, viewPrefixPath, liveReloadPort);
   setupLiveReload(app, viewPrefixPath, liveReloadPort);
+ 
 
   /**
    * Global pip for request body validation
