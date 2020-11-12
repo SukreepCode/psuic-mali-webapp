@@ -27,7 +27,7 @@ export class AuthController {
   }
 
   @Get('/error')
-  @Render('error')
+  @Render('error.njk')
   error(@Request() req) {
     const errorMessage = req.flash('all_exception_message')[0];
     // console.log(errorMessage);

@@ -1,11 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { NestExpressApplication, ExpressAdapter } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe , HttpAdapterHost} from '@nestjs/common';
+import { ValidationPipe, HttpAdapterHost } from '@nestjs/common';
 import { AppModule } from './app.module';
 import * as express from 'express';
 
-import {AllExceptionsFilter} from './auth/all-exceptions.filter';
+import { AllExceptionsFilter } from './auth/all-exceptions.filter';
 
 import * as path from 'path';
 import * as exphbs from 'express-handlebars';
@@ -17,14 +17,11 @@ import * as passport from 'passport';
 import * as livereloadMiddleware from 'connect-livereload';
 import * as livereload from 'livereload';
 
-
-
 let liveReloadPort = 35729;
 const sessionSecret = 'mysecret'; // Do not use in the production
 
 function setupPassportSession(app: any) {
-
-  var expiryDate = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
+  var expiryDate = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
   app.use(
     session({
@@ -46,7 +43,6 @@ function setupPassportSession(app: any) {
   app.use(flash());
 }
 
-
 function setupSwagger(app: any) {
   const options = new DocumentBuilder()
     .setTitle('Cats example')
@@ -63,7 +59,7 @@ function setupLiveReload(app: any, viewPrefixPath: string, liveReloadPort: numbe
   const hotServer = livereload.createServer({
     port: liveReloadPort,
     // Reload on changes to these file extensions.
-    exts: ['hbs', 'scss'],
+    exts: ['ejs', 'scss'],
     // Print debug info
     debug: false,
   });
@@ -78,25 +74,30 @@ function setupLiveReload(app: any, viewPrefixPath: string, liveReloadPort: numbe
   );
 }
 
+function getExpressInstance(app: any) {
+  return app.getHttpAdapter().getInstance();
+}
 
 function setupView(app: any, viewPrefixPath: string, liveReloadPort?: number) {
- app.engine(
-    '.hbs',
-    exphbs({
-      extname: '.hbs',
-      defaultLayout: 'main',
-      layoutsDir: path.join(__dirname, viewPrefixPath + '/layouts'),
-      partialsDir: path.join(__dirname, viewPrefixPath + '/partials'),
-      helpers: {
-        liveReloadPort,
-      },
-    }),
-  );
+  const nunjucks = require('nunjucks');
+  
+  app.set('view engine', 'html');
+  nunjucks.configure('views/templates', {
+    autoescape: true,
+    watch : true,
+    express: app,
+    // throwOnUndefined : true //for debugging
+  });
+
+  const expressApp = getExpressInstance(app);
+
+  expressApp.locals.viewSettings = {};
+  expressApp.locals.viewSettings.liveReloadPort = liveReloadPort;
 
   app.set('views', path.join(__dirname, viewPrefixPath));
-  app.set('view engine', '.hbs');
   app.use(express.static(path.join(__dirname, '../../public')));
 }
+
 declare const module: any;
 
 async function bootstrap() {
@@ -105,12 +106,11 @@ async function bootstrap() {
   /**
    * Setup view for Express and live reload
    */
-  
-  const viewPrefixPath = process.env.DEV_ENV === 'hotreload' ?  '../views/templates' : '../../views/templates';
+
+  const viewPrefixPath = process.env.DEV_ENV === 'hotreload' ? '../views/templates' : '../../views/templates';
   // setupSassComplier(app);
   setupView(app, viewPrefixPath, liveReloadPort);
   setupLiveReload(app, viewPrefixPath, liveReloadPort);
- 
 
   /**
    * Global pip for request body validation
@@ -140,10 +140,9 @@ async function bootstrap() {
    */
 
   if (module.hot) {
-   
     module.hot.accept();
     module.hot.dispose(() => {
-      app.close()
+      app.close();
       liveReloadPort += 1;
     });
   }
