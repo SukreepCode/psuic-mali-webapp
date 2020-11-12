@@ -66,6 +66,7 @@ function setupLiveReload(app: any, viewPrefixPath: string, liveReloadPort: numbe
 
   // Specify the folder to watch for file-changes.
   const viewPath = path.join(__dirname, viewPrefixPath);
+  console.log(viewPath);
   hotServer.watch(path.join(viewPath, '../'));
   app.use(
     livereloadMiddleware({
@@ -82,7 +83,7 @@ function setupView(app: any, viewPrefixPath: string, liveReloadPort?: number) {
   const nunjucks = require('nunjucks');
   
   app.set('view engine', 'html');
-  nunjucks.configure('views/nunjucks', {
+  nunjucks.configure('views/src', {
     autoescape: true,
     watch : true,
     express: app,
@@ -107,7 +108,7 @@ async function bootstrap() {
    * Setup view for Express and live reload
    */
 
-  const viewPrefixPath = process.env.DEV_ENV === 'hotreload' ? '../views/templates' : '../../views/templates';
+  const viewPrefixPath = process.env.DEV_ENV === 'hotreload' ? '../views/src' : '../../views/src';
   // setupSassComplier(app);
   setupView(app, viewPrefixPath, liveReloadPort);
   setupLiveReload(app, viewPrefixPath, liveReloadPort);

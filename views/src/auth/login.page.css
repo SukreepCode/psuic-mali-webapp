@@ -1,0 +1,28 @@
+.login-page {
+  background-color: red; }
+  .login-page .vertial-center-wrapper {
+    height: 100vh; }
+  .login-page .form-login {
+    width: 100%;
+    max-width: 450px;
+    padding: 2rem;
+    margin: 0 auto; }
+    .login-page .form-login .checkbox {
+      font-weight: 400; }
+    .login-page .form-login .form-control {
+      position: relative;
+      box-sizing: border-box;
+      height: auto;
+      padding: 10px; }
+    .login-page .form-login .form-control:focus {
+      z-index: 2; }
+    .login-page .form-login input[type='email'] {
+      margin-bottom: -1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0; }
+    .login-page .form-login input[type='password'] {
+      margin-bottom: 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0; }
+  .login-page .card {
+    border: none; }

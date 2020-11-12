@@ -1,0 +1,17 @@
+{
+  "name": "default",
+  "type": "sqlite",
+  "database": "./app.sqlite",
+  "entities": [
+    "dist/**/*.entity{.ts,.js}"
+  ],
+  "synchronize": true,
+  "migrations": [
+    "dist/migrations/**/*{.ts,.js}"
+  ],
+  "migrationsTableName": "migrations_typeorm",
+  "migrationsRun": true,
+  "cli": {
+    "migrationsDir": "migrations"
+  }
+}

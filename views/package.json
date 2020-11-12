@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "express": "node-sass-chokidar ./styles -o ../public/assets --watch --recursive",
-    "local": "node-sass-chokidar ./styles -o ./styles/output --watch --recursive",
-    "dev": "run-p express local"
+    "express": "node-sass-chokidar ./src -o ../public/css --watch --recursive",
+    "local": "node-sass-chokidar ./src -o ./dist --watch --recursive",
+    "dev": "run-p local express"
   },
   "author": "",
   "license": "MIT",
