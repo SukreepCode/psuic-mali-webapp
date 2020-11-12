@@ -29,6 +29,7 @@ import { CriteriaEntity } from './admin/criteria/criteria.entity';
 import { EvaluationEntity } from './admin/evaluation/evaluation.entity';
 import { SemestersEntity } from './admin/semesters/semesters.entity';
 import { EnrollEntity } from './admin/enroll/enroll.entity';
+import { AdminController } from './admin/admin.controller';
 
 @Module({
   imports: [
@@ -53,7 +54,7 @@ import { EnrollEntity } from './admin/enroll/enroll.entity';
     SemestersModule,
     AuthModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, AdminController],
   providers: [AppService],
 })
 export class AppModule {}

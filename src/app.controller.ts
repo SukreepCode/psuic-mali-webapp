@@ -10,7 +10,7 @@ import { AuthExceptionFilter } from './common/filters/auth-exceptions.filter';
 export class AppController {
 
   @Get('/')
-  @Render('index')
+  // @Render('index')
   login(@Res() res) {
     res.redirect('/auth/login');
     // return { name: ' thada'}
@@ -18,7 +18,7 @@ export class AppController {
   
   @UseGuards(IsAuthGuard)
   @Get('/app')
-  @Render('evaluation/index')
+  @Render('evaluation/home')
   getHome(@Request() req) {
     return { user: req.user };
   }

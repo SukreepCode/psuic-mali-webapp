@@ -1,0 +1,30 @@
+// Login
+
+.error-page {
+    background-color: $gray-100;
+  
+    .vertial-center-wrapper {
+      height: 100vh;
+      padding-top: 3rem;
+    }
+  
+    .content {
+      width: 100%;
+      max-width: 600px;
+      padding: 2rem;
+      margin: 0 auto;
+      height: auto;
+  
+    }
+  
+    // Override card
+    .card{
+      border: none;
+    }
+// Override button
+    .btn{
+        max-width: 200px;
+    }
+  
+  }
+  

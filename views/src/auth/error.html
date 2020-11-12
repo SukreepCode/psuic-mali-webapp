@@ -1,21 +1,31 @@
-
 {% extends "@layouts/main.html" %}
 
+
 {% block body %}
-<h1>Error: {{ statusCode }}</h1>
+<div class="error-page">
 
-<p>
-Can't access {{ path }}
-</p>
+    <div class="d-flex align-items-start vertial-center-wrapper">
 
-<p>
-    
-{{ message }}
+        <div class="card content">
+            <h1>Error: {{ message }}</h1>
 
-{{ name }}
-{{ stack }}
-</p>
+            <h6>STATUS CODE: {{ statusCode }}</h6>
 
-{{ timestamp }}
+            <h5 class="my-4">Reason: </h5>
+            <p>
+                {{ stack }}
+            </p>
+
+            </p>
+
+
+            <center>
+                <a href="/" class="btn btn-lg btn-primary ">Go back home</a>
+            </center>
+
+        </div>
+
+    </div>
+</div>
 
 {% endblock %}

@@ -29,7 +29,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
       path: request.url,
       timestamp: new Date().toISOString(),
       message: exception.message,
-      name: exception.message,
       stack: exception.stack,
     };
     request.flash('all_exception_message', errorMessage );

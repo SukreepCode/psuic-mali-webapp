@@ -9,8 +9,8 @@
 node_modules
 
 # compiled output from node sass
-/public/index.css
-/views/dist/*.css
+/public/css/**/*.css
+/views/dist/**/*.css
 
 # Logs
 logs

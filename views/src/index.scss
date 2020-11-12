@@ -1,3 +1,10 @@
 @import '@global/bootstrap';
 
-@import 'auth/login.page.scss';
+
+@import '@layouts/navbar.scss';
+
+@import 'auth/login.scss';
+@import 'auth/error.scss';
+
+
+@import 'evaluation/home.scss';

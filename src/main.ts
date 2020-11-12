@@ -123,7 +123,7 @@ async function bootstrap() {
    * https://docs.nestjs.com/exception-filters
    */
 
-  // app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalFilters(new AllExceptionsFilter());
   /**
    * Setup swagger api
    */

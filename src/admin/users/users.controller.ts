@@ -9,10 +9,7 @@ import { assignObject } from '../../common/utils';
 // import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../admin.guard';
-import {AuthExceptionFilter} from '../../common/filters/auth-exceptions.filter';
-// import { RolesGuard, Roles } from '../../common/roles';
 
-// @UseFilters(AuthExceptionFilter)
 @UseGuards(AdminGuard)
 @Controller('users')
 export class UsersController {
