@@ -12,8 +12,8 @@ export class AppController {
   @Get('/')
   @Render('index')
   login(@Res() res) {
-    // res.redirect('/auth/login');
-    return { name: ' thada'}
+    res.redirect('/auth/login');
+    // return { name: ' thada'}
   }
   
   @UseGuards(IsAuthGuard)
