@@ -18,7 +18,7 @@ export class AppController {
   
   @UseGuards(IsAuthGuard)
   @Get('/app')
-  @Render('home')
+  @Render('evaluation/index')
   getHome(@Request() req) {
     return { user: req.user };
   }

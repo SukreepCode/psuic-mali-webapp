@@ -2,13 +2,15 @@
 <html>
   <head>
     <link rel="stylesheet" href="/assets/index.css" />
+      {# <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> #}
+
   </head>
 
   <body>
     {% block body %}{% endblock %}
   </body>
 
-  {% block footer %}
+  {% block footer %}{% endblock %}
   <script>
     document.write(
       '<script src="http://' +
@@ -17,5 +19,6 @@
         'script>',
     );
   </script>
-  {% endblock %}
+  {# <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> #}
+
 </html>
