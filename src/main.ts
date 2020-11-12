@@ -95,6 +95,8 @@ function setupView(app: any, viewPrefixPath: string, liveReloadPort?: number) {
   expressApp.locals.viewSettings = {};
   expressApp.locals.viewSettings.liveReloadPort = liveReloadPort;
 
+  console.log(expressApp.locals);
+
   app.set('views', path.join(__dirname, viewPrefixPath));
   app.use(express.static(path.join(__dirname, '../../public')));
 }

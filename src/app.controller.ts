@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Res, Render, UseGuards, Request, UseFilters } from '@nestjs/common';
-import { Response } from 'express';
+// import { Response } from 'express';
 
 import { LoginGuard } from './common/guards/login.guard';
 import { IsAuthGuard } from './common/guards/auth.guard';
@@ -11,16 +11,18 @@ export class AppController {
 
   @Get('/')
   // @Render('index')
-  login(@Res() res) {
-    res.redirect('/auth/login');
-    // return { name: ' thada'}
+  login(@Request() req, @Res() res) {
+    if(req.isAuthenticated())
+      res.redirect('/app');
+    else
+      res.redirect('/auth/login');
   }
   
   @UseGuards(IsAuthGuard)
   @Get('/app')
   @Render('evaluation/home')
   getHome(@Request() req) {
-    return { user: req.user };
+    return { user: req.user};
   }
 
   @UseGuards(IsAuthGuard)

@@ -8,8 +8,8 @@ export class AdminController {
 
     @Get('/')
     @Render('admin/home')
-    login(@Res() res) {
-      return { name: ' thada'}
+    login(@Request() req) {
+        return { user: req.user};
     }
     
 }
