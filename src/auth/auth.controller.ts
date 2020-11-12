@@ -9,7 +9,7 @@ import { AuthExceptionFilter } from '../common/filters/auth-exceptions.filter';
 export class AuthController {
   
   @Get('/login')
-  @Render('login')
+  @Render('auth/login')
   index(@Request() req): { message: string, loginSubmitRoute: string } {
     return { message: req.flash('loginError'), loginSubmitRoute: '/auth/login'  };
   }
@@ -27,7 +27,7 @@ export class AuthController {
   }
 
   @Get('/error')
-  @Render('error.njk')
+  @Render('auth/error')
   error(@Request() req) {
     const errorMessage = req.flash('all_exception_message')[0];
     // console.log(errorMessage);

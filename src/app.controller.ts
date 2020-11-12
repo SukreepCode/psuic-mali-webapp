@@ -30,7 +30,5 @@ export class AppController {
     return { user: req.user };
   }
 
-  
-  
- 
+
 }

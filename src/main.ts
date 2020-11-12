@@ -59,7 +59,7 @@ function setupLiveReload(app: any, viewPrefixPath: string, liveReloadPort: numbe
   const hotServer = livereload.createServer({
     port: liveReloadPort,
     // Reload on changes to these file extensions.
-    exts: ['ejs', 'scss'],
+    exts: ['html', 'scss'],
     // Print debug info
     debug: false,
   });
@@ -82,7 +82,7 @@ function setupView(app: any, viewPrefixPath: string, liveReloadPort?: number) {
   const nunjucks = require('nunjucks');
   
   app.set('view engine', 'html');
-  nunjucks.configure('views/templates', {
+  nunjucks.configure('views/nunjucks', {
     autoescape: true,
     watch : true,
     express: app,

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="/assets/index.css">
+</head>
+
+<body>
+
+ {% block body %}{% endblock %}
+
+{% block footer %}
+  <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+      ':{{ viewSettings.liveReloadPort }}/livereload.js?snipver=1"></' + 'script>')
+
+  </script>
+  {% endblock %}
+</body>
+
+</html>
