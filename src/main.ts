@@ -59,7 +59,7 @@ function setupLiveReload(app: any, viewPrefixPath: string, liveReloadPort: numbe
   const hotServer = livereload.createServer({
     port: liveReloadPort,
     // Reload on changes to these file extensions.
-    exts: ['html', 'scss'],
+    exts: ['html', 'css'],
     // Print debug info
     debug: false,
   });
