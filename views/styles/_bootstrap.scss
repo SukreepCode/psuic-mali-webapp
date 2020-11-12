@@ -1,0 +1,135 @@
+/*!
+* Bootstrap
+* Copyright 2011-2019 The Bootstrap Authors
+* Copyright 2011-2019 Twitter, Inc.
+* Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+*/
+
+// Configuration
+
+@import url('https://fonts.googleapis.com/css?family=Bai+Jamjuree:300,400,500,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Taviraj:ital,wght@0,500;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+
+$font-family-body: "Montserrat", "Bai Jamjuree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-heading:  "Montserrat", "Kanit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-sans-serif:      "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-base:           $font-family-body;
+
+// Typo
+$theme-colors: (
+  "primary": #0057A3,
+);
+
+$body-color:  #363636;
+
+
+// Paragraphs
+
+// Style p element.
+$paragraph-margin-bottom:   1.2rem;
+$line-height-base:            1.8;
+$line-height-lg:              2;
+$line-height-sm:              1.25;
+
+// Heading
+// Scale => 1.20
+
+$font-size-base:              1.05rem;
+$h1-font-size:                $font-size-base * 2.074;
+$h2-font-size:                $font-size-base * 1.728;
+$h3-font-size:                $font-size-base * 1.44;
+$h4-font-size:                $font-size-base * 1.266;
+$h5-font-size:                $font-size-base * 1.15;
+$h6-font-size:                $font-size-base;
+
+
+$headings-margin-top:       2.4rem;     // My styles
+$headings-margin-bottom:     1rem;
+
+$headings-font-family :      $font-family-heading;
+$headings-font-weight:       500;
+
+// Container
+$container-max-widths: (
+  sm: 540px,
+  md: 660px,
+  lg: 720px,
+  xl: 960px
+);
+
+
+body{
+  font-family: $font-family-body;
+  font-weight: 300;
+}
+body:lang(th){
+    font-family: $font-family-body;
+    font-weight: 300;
+}
+
+
+body{
+  font-size: 1.05rem;
+}
+
+@media (min-width: 576px) {
+  body {
+    font-size: 1.2rem;    
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    font-size: 1.3rem;    
+  }
+}
+
+
+/**
+ *  Import Bootstrap component
+ */ 
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/utilities";
+
+// Layout & components
+
+@import "../node_modules/bootstrap/scss/root";
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/type";
+@import "../node_modules/bootstrap/scss/images";
+@import "../node_modules/bootstrap/scss/grid";
+// @import "../node_modules/bootstrap/scss/tables";
+@import "../node_modules/bootstrap/scss/forms";
+@import "../node_modules/bootstrap/scss/buttons";
+@import "../node_modules/bootstrap/scss/transitions";
+@import "../node_modules/bootstrap/scss/dropdown";
+@import "../node_modules/bootstrap/scss/button-group";
+@import "../node_modules/bootstrap/scss/nav";
+@import "../node_modules/bootstrap/scss/navbar";
+// @import "../node_modules/bootstrap/scss/card";
+// @import "../node_modules/bootstrap/scss/breadcrumb";
+// @import "../node_modules/bootstrap/scss/pagination";
+// @import "../node_modules/bootstrap/scss/badge";
+@import "../node_modules/bootstrap/scss/alert";
+// @import "../node_modules/bootstrap/scss/progress";
+// @import "../node_modules/bootstrap/scss/list-group";
+// @import "../node_modules/bootstrap/scss/close";
+// @import "../node_modules/bootstrap/scss/toasts";
+// @import "../node_modules/bootstrap/scss/modal";
+// @import "../node_modules/bootstrap/scss/tooltip";
+// @import "../node_modules/bootstrap/scss/popover";
+// @import "../node_modules/bootstrap/scss/carousel";
+// @import "../node_modules/bootstrap/scss/spinners";
+
+
+// Helpers
+//  @import "../node_modules/bootstrap/scss/helpers";
+
+
+// Utilities
+//  @import "../node_modules/bootstrap/scss/utilities/api";

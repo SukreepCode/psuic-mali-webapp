@@ -18,6 +18,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "view:dev-watch": "cd views && npm run dev",
+    "view": "cd views && npm ",
     "dev": "npm-run-all --parallel -l *:dev-watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
