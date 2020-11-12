@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Res, Render, UseGuards, Request, UseFilters } from '@nestjs/common';
 import { Response } from 'express';
 
-import { LoginGuard } from './common/guards/login.guard';
 import { IsAuthGuard } from './common/guards/auth.guard';
 import { AuthExceptionFilter } from './common/filters/auth-exceptions.filter';
 
@@ -12,7 +11,7 @@ export class AppController {
   @Get('/')
   @Render('index')
   login(@Res() res) {
-    res.redirect('/auth/login');
+    // res.redirect('/auth/login');
     // return { name: ' thada'}
   }
   

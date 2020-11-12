@@ -1,37 +1,47 @@
-import { Controller, Get, Post, Res, Render, UseGuards, Request, UseFilters } from '@nestjs/common';
-import { Response } from 'express';
+import { Controller, Post, Body, HttpException, HttpStatus, Logger, UseGuards, Request } from '@nestjs/common';
 
-import { LoginGuard } from '../common/guards/login.guard';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { LocalAuthGuard } from '../common/guards/local-auth.guard';
 import { AuthExceptionFilter } from '../common/filters/auth-exceptions.filter';
 
+import { UsersEntity } from '../admin/users/users.entity';
+import { UsersService } from '../admin/users/users.service';
+import { AuthService } from './auth.service';
+import { CreateUserDto } from '../admin/users/users.dto';
+import { assignObject } from '../common/utils';
+
 @Controller('auth')
-@UseFilters(AuthExceptionFilter)
+// @UseFilters(AuthExceptionFilter)
 export class AuthController {
-  
-  @Get('/login')
-  @Render('auth/login')
-  index(@Request() req): { message: string, loginSubmitRoute: string } {
-    return { message: req.flash('loginError'), loginSubmitRoute: '/auth/login'  };
-  }
+  constructor(private readonly usersService: UsersService, private authService: AuthService) {}
 
-  @UseGuards(LoginGuard)
+  @UseGuards(LocalAuthGuard)
   @Post('/login')
-  login(@Res() res: Response) {
-    res.redirect('/app');
+  async login(@Request() req) {
+    return this.authService.login(req.user);
   }
 
-  @Get('/logout')
-  logout(@Request() req, @Res() res: Response) {
-    req.logout();
-    res.redirect('/');
+  @UseGuards(JwtAuthGuard)
+  @Post('/profile')
+  async profile(@Request() req) {
+    return req.user;
   }
 
-  @Get('/error')
-  @Render('auth/error')
-  error(@Request() req) {
-    const errorMessage = req.flash('all_exception_message')[0];
-    // console.log(errorMessage);
-    return { ...errorMessage };
-  }
+  @Post('/signup')
+  public async signUp(@Body() newUser: CreateUserDto) {
+    const findUser = await this.usersService.findByUsername(newUser.username);
+    if (findUser) {
+      return new HttpException(
+        { status: HttpStatus.CONFLICT, message: `The username: ${newUser.username} is existing.` },
+        HttpStatus.CONFLICT,
+      );
+    }
+    const createUser = {
+      ...newUser,
+      role: 'student',
+    };
 
+    const user: UsersEntity = assignObject(new UsersEntity(), createUser);
+    return await this.usersService.createOrUpdate(user);
+  }
 }

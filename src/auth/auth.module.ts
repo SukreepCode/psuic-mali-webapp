@@ -16,13 +16,13 @@ import { SessionSerializer } from './session.serializer';
 @Module({
   imports: [UsersModule,
     TypeOrmModule.forFeature([UsersEntity]),
-    PassportModule,
-    // JwtModule.register({
-    //   secret: jwtConstants.secret,
-    //   signOptions: { expiresIn: '1800s' },
-    // })
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '1800s' },
+    }),
   ],
   controllers: [AuthController],
-  providers: [UsersService, AuthService, LocalStrategy, SessionSerializer/* , JwtStrategy */],
+  providers: [UsersService, AuthService, LocalStrategy, JwtStrategy ],
 })
 export class AuthModule { }
