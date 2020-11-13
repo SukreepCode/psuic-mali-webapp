@@ -5,7 +5,7 @@
 *.sqlite
 
 # compiled output
-/dist
+/server/dist
 node_modules
 
 # compiled output from node sass
