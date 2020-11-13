@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
 import validate from 'validate.js';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
+import { Dictionary } from '../common/types'
+import { Box, Grid, Button, TextField, Link, Typography } from '@material-ui/core';
+
+import MinimalLayout from '../layouts/Minimal/MinimalLayout';
 import useStyles from './Login.style';
 
-import { Dictionary } from '../common/types'
-import {
-  Grid,
-  Button,
-  TextField,
-  Link,
-  Typography
-} from '@material-ui/core';
-import MinimalLayout from '../layouts/Minimal/MinimalLayout';
-
 const schema = {
-  email: {
+  username: {
     presence: { allowEmpty: false, message: 'is required' },
     email: true,
     length: {
@@ -76,9 +70,10 @@ const Login = (props: any) => {
     }));
   };
 
-  const handleSignIn = (event: any) => {
+  const handleLogin = (event: any) => {
     event.preventDefault();
-    history.push('/');
+    console.log(formState.values);
+    // history.push('/');
   };
 
   const hasError = (field: string) =>
@@ -87,30 +82,40 @@ const Login = (props: any) => {
   return (
     <MinimalLayout>
       <div className={classes.root}>
-        <Grid className={classes.grid} container>
-          <Grid className={classes.content} item lg={7} xs={12}>
-            <div className={classes.content}>
-              <div className={classes.contentBody}>
-                <form className={classes.form} onSubmit={handleSignIn}>
-                  <Typography className={classes.title} variant="h2">
-                    Sign in
-                  </Typography>
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+        >
 
-                  <TextField className={classes.textField} error={hasError('email')} fullWidth helperText={hasError('email') ? formState.errors.email[0] : null} label="Email address" name="email" onChange={handleChange} type="text" value={formState.values.email ||
-                    ''} variant="outlined" />
-                  <TextField className={classes.textField} error={hasError('password')} fullWidth helperText={hasError('password') ? formState.errors.password[0] : null} label="Password" name="password" onChange={handleChange} type="password" value={formState.values.password
-                    || ''} variant="outlined" />
-                  <Button className={classes.signInButton} color="primary" disabled={!formState.isValid} fullWidth size="large" type="submit" variant="contained">
-                    Login
-                  </Button>
-                  <Typography color="textSecondary" variant="body1">
-                    Don't have an account?{' '}
-                    <Link component={RouterLink} to="/sign-up" variant="h6"> Sign up
-                                </Link>
-                  </Typography>
-                </form>
-              </div>
-            </div>
+          <Grid item xs={12} md={3}>
+
+
+
+            <form className={classes.form} onSubmit={handleLogin}>
+              <Typography className={classes.title} variant="h2">  Sign in  </Typography>
+
+              <TextField
+                className={classes.textField} variant="outlined" fullWidth size="medium" label="Email address" name="username" type="text"
+                error={hasError('username')} helperText={hasError('username') ? formState.errors.username[0] : null} onChange={handleChange} value={formState.values.username || ''} />
+
+              <TextField
+                className={classes.textField} variant="outlined" fullWidth size="medium" label="Password" name="password" type="password"
+                error={hasError('password')} helperText={hasError('password') ? formState.errors.password[0] : null} onChange={handleChange}
+                value={formState.values.password || ''} />
+
+              <Button className={classes.LoginButton} color="primary" disabled={!formState.isValid} fullWidth size="medium" type="submit" variant="contained">
+                Login
+              </Button>
+
+              <Typography color="textSecondary" variant="body1">
+                Don't have an account?{' '}
+                <Link component={RouterLink} to="/sign-up" variant="h6"> Sign up </Link>
+              </Typography>
+            </form>
+
           </Grid>
         </Grid>
       </div>
