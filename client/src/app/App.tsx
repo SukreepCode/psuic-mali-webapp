@@ -1,27 +1,27 @@
 import React from 'react';
 import './App.css';
-import validate from 'validate.js';
+
 import { ThemeProvider } from '@material-ui/styles';
 import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import validators from '../common/validators';
-import Routes from '../pages/Router';
+import Routes from '../pages/Routes';
 import theme from '../theme';
 
-const browserHistory = createBrowserHistory();
+// for service
+import { ClientContextProvider } from 'react-fetching-library';
+import { Client } from '../services/config';
 
-validate.validators = {
-  ...validate.validators,
-  ...validators
-};
+const browserHistory = createBrowserHistory();
 
 function App() {
   return (
     <div className="App">
-        <ThemeProvider theme={theme}>
-        <Router history={browserHistory}>
-          <Routes /> 
-        </Router>
+      <ThemeProvider theme={theme}>
+        <ClientContextProvider client={Client}>
+          <Router history={browserHistory}>
+            <Routes />
+          </Router>
+        </ClientContextProvider>
       </ThemeProvider>
     </div>
   );

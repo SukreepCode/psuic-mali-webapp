@@ -46,6 +46,11 @@ async function bootstrap() {
    */
   setupSwagger(app);
 
+  /**
+   * Security Issue: https://docs.nestjs.com/techniques/security
+   */
+  app.enableCors();
+
 
   await app.listen(4000);
 

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
-import { Dictionary } from '../common/types'
-import { Container, Grid, Button, TextField, Link, Typography, FormControlLabel, Checkbox } from '@material-ui/core';
-import { useForm, Controller } from 'react-hook-form';
+
+import { Box, Container, Button, TextField, Link, Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import MinimalLayout from '../layouts/Minimal/MinimalLayout';
 import useStyles from './Login.style';
+import { Alert } from '../components';
+
+import { useForm, Controller } from 'react-hook-form';
+import { AuthService } from '../services';
 
 interface IFormInput {
   username: string;
@@ -13,20 +16,33 @@ interface IFormInput {
 }
 
 const Login = (props: any) => {
-  const { history } = props;
+  const { history, loginSuccessRoute } = props;
+  
   const classes = useStyles();
-  const { register, handleSubmit, control, errors } = useForm<IFormInput>()
+  const { register, handleSubmit, control, errors } = useForm<IFormInput>();
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   useEffect(() => {
     console.log(errors.username);
   }, [errors.username]);
 
-  const handleBack = () => {
-    history.goBack();
-  };
+  // const handleBack = () => {
+  //   history.goBack();
+  // };
 
-  const onSubmit = (data: any) => {
-    alert(JSON.stringify(data));
+  const onSubmit = async (data: IFormInput) => {
+    try {
+      const response = await AuthService.login({
+        username: data.username,
+        password: data.password
+      });
+      console.log(response);
+      history.push(loginSuccessRoute);
+    } catch (err) {
+      // console.log(err.response);
+      setSubmitSuccess(true);
+    }
+   
   };
 
   return (
@@ -61,6 +77,8 @@ const Login = (props: any) => {
                 />
               } />
 
+
+
             <Button className={classes.LoginButton} color="primary" fullWidth size="medium" type="submit" variant="contained">
               Login
             </Button>
@@ -68,11 +86,25 @@ const Login = (props: any) => {
               Don't have an account?{' '}
               <Link component={RouterLink} to="/sign-up" variant="h6"> Sign up </Link>
             </Typography>
+
+
+            {submitSuccess &&
+              <Box my={3}>
+                <Alert severity="error">
+                  Username or password is incorrect
+                 </Alert>
+              </Box>
+            }
+
           </form>
 
 
         </Container>
       </div>
+
+
+
+
     </MinimalLayout>
   );
 };
