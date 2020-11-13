@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme: any) => ({
     root: {
-      backgroundColor: theme.palette.background.default,
-      height: '100vh',
+      backgroundColor: theme.palette.background.paper,
+      height: '80vh',
       paddingTop: 50
     },
     form: {
