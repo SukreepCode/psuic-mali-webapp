@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import Logo from './logo-blue.png';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -29,7 +28,7 @@ const Topbar = (props: any) => {
     >
       <Toolbar>
         <RouterLink to="/">
-          <img className={classes.logo} src={Logo} />{' '}
+          <img className={classes.logo} src="/images/logo-blue.png" />{' '}
         </RouterLink>
       </Toolbar>
     </AppBar>

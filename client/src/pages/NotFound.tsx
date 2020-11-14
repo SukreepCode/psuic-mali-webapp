@@ -3,7 +3,7 @@ import { Container, Typography, Grid, Paper } from "@material-ui/core";
 import useStyles from "./NotFound.style";
 // import { Link } from "react-router-dom";
 
-const Page404 = () => {
+const NotFound = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -37,4 +37,4 @@ const Page404 = () => {
   );
 };
 
-export default Page404;
+export default NotFound;
