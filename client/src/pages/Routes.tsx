@@ -8,10 +8,15 @@ import Login from './Login';
 import Evaluation from './Evaluation';
 import Logout from './Logout';
 import ValidatingToken from '../components/ValidatingToken';
-import Page404 from './Page404';
+import NotFound from './NotFound';
+import PermissionDenied from './PermissionDenied';
+import Unauthorized from './Unauthorized';
+import { Unarchive } from '@material-ui/icons';
 
 export const LOGIN_PATH = '/login';
 export const VALIDATING_TOKEN_PATH = '/validating-token';
+export const PERMISSION_DENIED = '/permission-denied';
+export const UNAUTHORIZED = '/unauthorized';
 
 const Routes: React.FunctionComponent = () => {
   return (
@@ -22,15 +27,15 @@ const Routes: React.FunctionComponent = () => {
         <Route exact path={LOGIN_PATH} >
           <Login loginSuccessRoute="/evaluation" />
         </Route>
-
+        <Route path={PERMISSION_DENIED} component={PermissionDenied} />
+        <Route path={UNAUTHORIZED} component={Unauthorized} />
         <Route path="/logout" component={Logout} />
 
         <PrivateRoute exact path="/evaluation" component={Evaluation} />
-
         <Route path={VALIDATING_TOKEN_PATH} component={ValidatingToken} />
 
         {/* Catch all route */}
-        <Route component={Page404} />
+        <Route component={NotFound} />
       </Switch>
 
     </Router>

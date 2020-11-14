@@ -3,7 +3,7 @@ import * as Auth from '../services/auth';
 import { useSelector, useDispatch, connect } from "react-redux";
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 
-import { LOGIN_PATH } from '../pages/Routes'
+import { LOGIN_PATH, PERMISSION_DENIED, UNAUTHORIZED } from '../pages/Routes'
 import store from "../app/store";
 
 const dispatch = store.dispatch;
@@ -13,7 +13,6 @@ const ValidatingToken = (props: any) => {
   const auth: Auth.AuthType = useSelector(Auth.selector);
   const dispatch = useDispatch();
   const [nextRoute, setNextRoute] = useState("");
-  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
 
@@ -37,25 +36,10 @@ const ValidatingToken = (props: any) => {
       await dispatch(Auth.checkAuthentication());
     }
    
-
-    // const max = 100;
-
-    // const runner = async () => {
-    //   for (let i = 0; i < max; i++) {
-    //     setCounter(counter + 1);
-    //     console.log(`${counter}: --> ${auth.isAuthenticated}`)
-    //     await sleep(200);
-    //   }
-    //   // history.push(LOGIN_PATH);
-    // }
     checkAuth();
-    // runner();
 
   }, []);
 
-  function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
 
   useEffect(() => {
     navigateToNextRoute();
@@ -66,7 +50,7 @@ const ValidatingToken = (props: any) => {
       console.log(`Routing to ${nextRoute}`);
       history.push(nextRoute);
     } else if (auth.isAuthenticated === false) {
-      history.push(LOGIN_PATH);
+      history.push(UNAUTHORIZED);
     }
     console.log(`ValidatingToken ${auth.isAuthenticated}`);
   }
