@@ -13,7 +13,7 @@ const Logout = (props: any) => {
 
   useEffect(() => {
     dispatch(Auth.logout());
-    history.push(VALIDATING_TOKEN_PATH);
+    // history.push(VALIDATING_TOKEN_PATH);
   }, []);
 
   return (

@@ -12,11 +12,11 @@ const ValidatingToken = (props: any) => {
   const { history } = props;
   const auth: Auth.AuthType = useSelector(Auth.selector);
   const dispatch = useDispatch();
-
   const [nextRoute, setNextRoute] = useState("");
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    dispatch(Auth.checkAuthentication());
+
     const searchParams = new URLSearchParams(window.location.search);
     console.log(searchParams.has("next"));
 
@@ -29,13 +29,33 @@ const ValidatingToken = (props: any) => {
     } else if (props.location.state?.nextRoute) {
       setNextRoute(props.location.state.nextRoute);
     } else {
-      setNextRoute(LOGIN_PATH);
       history.push(LOGIN_PATH);
     }
 
-    navigateToNextRoute();
+
+    const checkAuth = async () => {
+      await dispatch(Auth.checkAuthentication());
+    }
+   
+
+    // const max = 100;
+
+    // const runner = async () => {
+    //   for (let i = 0; i < max; i++) {
+    //     setCounter(counter + 1);
+    //     console.log(`${counter}: --> ${auth.isAuthenticated}`)
+    //     await sleep(200);
+    //   }
+    //   // history.push(LOGIN_PATH);
+    // }
+    checkAuth();
+    // runner();
 
   }, []);
+
+  function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   useEffect(() => {
     navigateToNextRoute();
@@ -45,8 +65,7 @@ const ValidatingToken = (props: any) => {
     if (auth.isAuthenticated && nextRoute !== "") {
       console.log(`Routing to ${nextRoute}`);
       history.push(nextRoute);
-    } else if(auth.isAuthenticated === false){
-      setNextRoute(LOGIN_PATH);
+    } else if (auth.isAuthenticated === false) {
       history.push(LOGIN_PATH);
     }
     console.log(`ValidatingToken ${auth.isAuthenticated}`);
@@ -59,50 +78,3 @@ const ValidatingToken = (props: any) => {
 }
 
 export default withRouter(ValidatingToken);
-
-// type MyProps = {
-//   // using `interface` is also ok
-//   nextRoute: string;
-//   auth: any;
-// };
-
-// type MyState = {
-//   count: number; // like this
-// };
-
-// class ValidatingToken extends React.Component<MyProps, MyState> {
-//   state: MyState = {
-//     count: 0,
-//   };
-
-//   async componentWillMount() {
-//     // add event listeners (Flux Store, WebSocket, document, etc.)
-//     console.log("Will Mounted");
-//     await dispatch(Auth.checkAuthentication());
-//     console.log(`ValidatingToken ${auth.isAuthenticated}`);
-//     // location.href = this.props.nextRoute;
-//   }
-
-//   componentDidMount() {
-//     // React.getDOMNode()
-//     console.log("Mounted");
-
-//   }
-
-//   componentWillUnmount() {
-//     // remove event listeners (Flux Store, WebSocket, document, etc.) {this.state.count}
-//   }
-//   render() {
-//     return (
-//       <div>
-//         {this.props.nextRoute}
-//       </div>
-//     );
-//   }
-// }
-
-// const mapStateToProps = (state: any) => ({
-//   auth: state.auth
-// });
-
-// export default connect(mapStateToProps)(ValidatingToken);

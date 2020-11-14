@@ -45,6 +45,7 @@ export const PrivateRoute: React.FC<PropsType> = props => {
   let nextRoute: any;
   if (auth.isAuthenticated === undefined) {
     nextRoute = encodeURI(`${location.pathname}${location.search}`);
+    console.log('next ' + nextRoute)
     renderComponent = () => <Redirect to={{ pathname: VALIDATING_TOKEN_PATH, search: `?next=${nextRoute}`, state: { nextRoute: nextRoute } }} />;
   } else {
     renderComponent = () => <Redirect to={{ pathname: redirectPath }} />;

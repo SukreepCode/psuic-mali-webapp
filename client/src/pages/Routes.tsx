@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route , Redirect} from "react-router-dom";
 
 import PrivateRoute from '../components/PrivateRoute';
 
@@ -21,13 +21,17 @@ const Routes: React.FunctionComponent = () => {
         <Route exact path={LOGIN_PATH} >
           <Login loginSuccessRoute="/evaluation" />
         </Route>
-        <Route path={VALIDATING_TOKEN_PATH} component={ValidatingToken} />
+      
         <Route path="/logout" component={Logout} />
 
         <PrivateRoute exact path="/evaluation" component={Evaluation} />
 
+      {/* Catch all route */}
+        {/* <Route render={() => <Redirect to={LOGIN_PATH} />} /> */}
 
+        <Route exact path={VALIDATING_TOKEN_PATH} component={ValidatingToken} />
       </Switch>
+      
     </Router>
   );
 }

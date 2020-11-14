@@ -65,7 +65,7 @@ const slice = createSlice({
 export function setAuthToken(token: string) {
   return (dispatch: AppDispatch) => {
     const decoded = setJwtTokenLocalStorage(token);
-    console.log(`decoded ${JSON.stringify(decoded)}`);
+    // console.log(`decoded ${JSON.stringify(decoded)}`);
     dispatch(actions.setAuthenticatedUser(decoded.username));
     // isAuthenticated should be true
   }
@@ -77,15 +77,17 @@ export function checkAuthentication() : AppThunk{
     try {
       setAuthHeaderToken(localStorage[JWT_LOCAL_STORAGE_KEY]);
       const response = await AuthService.checkToken();
-      console.log(response.data);
+      // console.log(response.data);
       if (response.data.username) {
         dispatch(actions.setAuthenticatedUser(response.data.username));
       }else {
         console.error("invalid token");
+        dispatch(actions.setAuthenticatedUser(""));
       }
       return status;
     } catch (err) {
       console.error(err);
+      dispatch(actions.setAuthenticatedUser(""));
     }
   }
 
@@ -102,6 +104,7 @@ export function logout() {
     } catch(err){
       console.log('Invalid Token: Logout success');
       dispatch(actions.setAuthenticatedUser(""));
+      window.location.href = '/login'
     }
   }
 }
