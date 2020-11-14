@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/rootReducer';
-import { AppDispatch } from '../../app/store';
+import { AppDispatch, AppThunk } from '../../app/store';
 
 import * as AuthService from './auth.service';
 
@@ -72,7 +72,7 @@ export function setAuthToken(token: string) {
 }
 
 
-export function checkAuthentication() {
+export function checkAuthentication() : AppThunk{
   return async (dispatch: AppDispatch) => {
     try {
       setAuthHeaderToken(localStorage[JWT_LOCAL_STORAGE_KEY]);
@@ -94,11 +94,15 @@ export function checkAuthentication() {
 
 export function logout() {
   return (dispatch: AppDispatch) => {
+    try {
     setJwtTokenLocalStorage("");
     // Set current user to "" which will set isAuthenticated to false
-    dispatch(actions.setAuthenticatedUser(""));
+    // dispatch(actions.setAuthenticatedUser(""));
     // isAuthenticated should be false
-
+    } catch(err){
+      console.log('Invalid Token: Logout success');
+      dispatch(actions.setAuthenticatedUser(""));
+    }
   }
 }
 

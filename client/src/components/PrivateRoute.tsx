@@ -13,12 +13,12 @@ import { useSelector, useDispatch } from "react-redux";
 import * as Auth from '../services/auth';
 
 import ValidatingToken from './ValidatingToken';
-import { VALIDATING_TOKEN_PATH } from '../pages/Routes';
+import { VALIDATING_TOKEN_PATH, LOGIN_PATH } from '../pages/Routes';
 
 // const dispatch = store.dispatch;
 
 interface PropsType extends RouteProps {
-  loginPath: string;
+  // loginPath: string;
   isAllowed?: boolean;
   restrictedPath?: string;
 }
@@ -31,9 +31,11 @@ export const PrivateRoute: React.FC<PropsType> = props => {
   const isAllowed = props.isAllowed ? props.isAllowed : true;
   const restrictedPath = props.restrictedPath ? props.restrictedPath : "/error";
 
+  console.log(`PrivateRoute: ${auth.isAuthenticated}`);
+
   let redirectPath = '';
   if (!auth.isAuthenticated) {
-    redirectPath = props.loginPath;
+    redirectPath = LOGIN_PATH;
   }
   if (auth.isAuthenticated && !isAllowed) {
     redirectPath = restrictedPath;

@@ -6,6 +6,7 @@ import PrivateRoute from '../components/PrivateRoute';
 import Home from './Home'
 import Login from './Login';
 import Evaluation from './Evaluation';
+import Logout from './Logout';
 import ValidatingToken from '../components/ValidatingToken';
 
 export const LOGIN_PATH = '/login';
@@ -16,16 +17,16 @@ const Routes: React.FunctionComponent = () => {
     <Router>
       <Switch>
 
-        <Route exact path="/" component={Home} />
+        <PrivateRoute exact path="/" component={Home} />
         <Route exact path={LOGIN_PATH} >
           <Login loginSuccessRoute="/evaluation" />
         </Route>
         <Route path={VALIDATING_TOKEN_PATH} component={ValidatingToken} />
-        <PrivateRoute exact path="/evaluation" 
-          component={Evaluation}
-          loginPath={LOGIN_PATH} />
+        <Route path="/logout" component={Logout} />
 
-        
+        <PrivateRoute exact path="/evaluation" component={Evaluation} />
+
+
       </Switch>
     </Router>
   );

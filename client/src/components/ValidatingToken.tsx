@@ -30,6 +30,7 @@ const ValidatingToken = (props: any) => {
       setNextRoute(props.location.state.nextRoute);
     } else {
       setNextRoute(LOGIN_PATH);
+      history.push(LOGIN_PATH);
     }
 
     navigateToNextRoute();
@@ -44,6 +45,9 @@ const ValidatingToken = (props: any) => {
     if (auth.isAuthenticated && nextRoute !== "") {
       console.log(`Routing to ${nextRoute}`);
       history.push(nextRoute);
+    } else if(auth.isAuthenticated === false){
+      setNextRoute(LOGIN_PATH);
+      history.push(LOGIN_PATH);
     }
     console.log(`ValidatingToken ${auth.isAuthenticated}`);
   }
