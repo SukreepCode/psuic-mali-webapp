@@ -7,7 +7,9 @@ import useStyles from './Login.style';
 import { Alert } from '../components';
 
 import { useForm, Controller } from 'react-hook-form';
-import { AuthService } from '../services';
+
+import { useSelector, useDispatch } from "react-redux";
+import * as Auth from '../services/auth';
 
 interface IFormInput {
   username: string;
@@ -17,32 +19,61 @@ interface IFormInput {
 
 const Login = (props: any) => {
   const { history, loginSuccessRoute } = props;
-  
-  const classes = useStyles();
+  // Redux
+  const dispatch = useDispatch();
+  const auth: Auth.AuthType = useSelector(Auth.selector);
+
+  // Form Control
   const { register, handleSubmit, control, errors } = useForm<IFormInput>();
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const [submitStatus, setSubmitStatus] = useState({
+    isSubmitted: false,
+    errorMessage: ""
+  })
+
+  const classes = useStyles();
+
+  const handleBack = () => {
+    history.goBack();
+  };
 
   useEffect(() => {
-    console.log(errors.username);
-  }, [errors.username]);
-
-  // const handleBack = () => {
-  //   history.goBack();
-  // };
+    console.log(`useEffect auth: ${auth.isAuthenticated}`);
+    // exipred: ${Auth.checkAuthTokenExpired()}`);
+    if (auth.isAuthenticated) {
+      console.log(`useEffect check expired: ${Auth.checkAuthTokenExpired()}`);
+      if (!Auth.checkAuthTokenExpired()) {
+        history.push(loginSuccessRoute);
+      }
+    }
+  }, [auth]);
 
   const onSubmit = async (data: IFormInput) => {
     try {
-      const response = await AuthService.login({
+      const response = await Auth.service.login({
         username: data.username,
         password: data.password
       });
       console.log(response);
-      history.push(loginSuccessRoute);
-    } catch (err) {
-      // console.log(err.response);
-      setSubmitSuccess(true);
+      console.log(`before auth: ${auth.isAuthenticated}`);
+      dispatch(Auth.setAuthToken(response.data.access_token));
+      console.log(`after auth: ${auth.isAuthenticated}`);
+      // history.push(loginSuccessRoute);
+
+    } catch (err: any) {
+      let errorMessage = "";
+      if (err.response) {
+        console.log(err.response);
+        errorMessage = `${err.response.data.message}`;
+      } else {
+        errorMessage = `${err.message}: Can't connect to the server`;
+      }
+      setSubmitStatus({
+        isSubmitted: true,
+        errorMessage
+      });
     }
-   
+
   };
 
   return (
@@ -88,11 +119,11 @@ const Login = (props: any) => {
             </Typography>
 
 
-            {submitSuccess &&
+            {submitStatus.isSubmitted &&
               <Box my={3}>
                 <Alert severity="error">
-                  Username or password is incorrect
-                 </Alert>
+                  {submitStatus.errorMessage}
+                </Alert>
               </Box>
             }
 

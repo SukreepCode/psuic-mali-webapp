@@ -16,13 +16,13 @@ const browserHistory = createBrowserHistory();
 function App() {
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
-        <ClientContextProvider client={Client}>
-          <Router history={browserHistory}>
-            <Routes />
-          </Router>
-        </ClientContextProvider>
-      </ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <ClientContextProvider client={Client}>
+            <Router history={browserHistory}>
+              <Routes />
+            </Router>
+          </ClientContextProvider>
+        </ThemeProvider>
     </div>
   );
 }
