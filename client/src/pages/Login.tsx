@@ -4,7 +4,7 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 import { Box, Container, Button, TextField, Link, Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import MinimalLayout from '../layouts/Minimal/MinimalLayout';
 import useStyles from './Login.style';
-import { Alert } from '../components';
+import { AlertMessage } from '../components';
 
 import { useForm, Controller } from 'react-hook-form';
 
@@ -37,15 +37,11 @@ const Login = (props: any) => {
     history.goBack();
   };
 
+
   useEffect(() => {
-    console.log(`useEffect auth: ${auth.isAuthenticated}`);
-    // exipred: ${Auth.checkAuthTokenExpired()}`);
     if (auth.isAuthenticated) {
-      console.log(`useEffect check expired: ${Auth.checkAuthTokenExpired()}`);
-      if (!Auth.checkAuthTokenExpired()) {
         history.push(loginSuccessRoute);
       }
-    }
   }, [auth]);
 
   const onSubmit = async (data: IFormInput) => {
@@ -55,9 +51,9 @@ const Login = (props: any) => {
         password: data.password
       });
       console.log(response);
-      console.log(`before auth: ${auth.isAuthenticated}`);
+      // console.log(`before auth: ${auth.isAuthenticated}`);
       dispatch(Auth.setAuthToken(response.data.access_token));
-      console.log(`after auth: ${auth.isAuthenticated}`);
+      // console.log(`after auth: ${auth.isAuthenticated}`);
       // history.push(loginSuccessRoute);
 
     } catch (err: any) {
@@ -121,9 +117,9 @@ const Login = (props: any) => {
 
             {submitStatus.isSubmitted &&
               <Box my={3}>
-                <Alert severity="error">
+                <AlertMessage severity="error">
                   {submitStatus.errorMessage}
-                </Alert>
+                </AlertMessage>
               </Box>
             }
 

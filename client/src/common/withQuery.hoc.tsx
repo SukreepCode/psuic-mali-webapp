@@ -16,7 +16,7 @@ export type withQueryProps = {
 };
 
 export const withQuery = (WrappedComponent: any, fetchAction: Action, initFetch? : boolean ) => {
-  return class ComponentWithLoading extends Component {
+  return class ComponentWithQuery extends Component {
     render() {
 
       initFetch = initFetch === undefined ? true : false;

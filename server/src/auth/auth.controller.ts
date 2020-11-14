@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus, Logger, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, HttpException, HttpStatus, Logger, UseGuards, Request, UseFilters } from '@nestjs/common';
 
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../common/guards/local-auth.guard';
@@ -13,7 +13,7 @@ import { assignObject } from '../common/utils';
 @Controller('auth')
 // @UseFilters(AuthExceptionFilter)
 export class AuthController {
-  constructor(private readonly usersService: UsersService, private authService: AuthService) {}
+  constructor(private readonly usersService: UsersService, private authService: AuthService) { }
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
@@ -23,8 +23,16 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Post('/profile')
-  async profile(@Request() req) {
+  profile(@Request() req) {
     return req.user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/check')
+  check(@Request() req) {
+    if (req.user)
+      return { status: true, ...req.user }
+    return { status: false }
   }
 
   @Post('/signup')

@@ -14,15 +14,20 @@ import {
       const ctx = host.switchToHttp();
       const response = ctx.getResponse<Response>();
       const request = ctx.getRequest<Request>();
-  
-      if (
-        exception instanceof UnauthorizedException ||
-        exception instanceof ForbiddenException
-      ) {
-        request.flash('loginError', 'Please try again!');
-        response.redirect('/');
-      } else {
-        response.redirect('/error');
-      }
+
+      
+      throw exception;
+      // if (!exception) {
+      //   throw new UnauthorizedException("Username or password is incorrect");
+      // }
+      // if (
+      //   exception instanceof UnauthorizedException ||
+      //   exception instanceof ForbiddenException
+      // ) {
+      //   request.flash('loginError', 'Please try again!');
+      //   response.redirect('/');
+      // } else {
+      //   response.redirect('/error');
+      // }
     }
   }

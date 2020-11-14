@@ -5,19 +5,21 @@ import { AppDispatch } from '../../app/store';
 import * as AuthService from './auth.service';
 
 import { isEmpty } from '../../common';
-import { setJwtTokenLocalStorage } from './auth.helper';
+import { setJwtTokenLocalStorage, setAuthHeaderToken } from './auth.helper';
+import Jwt from './jwt';
+import { JWT_LOCAL_STORAGE_KEY } from './auth.constant';
 
 /**
  * Auth Slice: Combine Actions & Reducers (Redux Toolkit)
  */
 
 export type AuthType = {
-  isAuthenticated?: boolean;
+  isAuthenticated: boolean | undefined;
   username?: string;
 };
 
 const initialState: AuthType = {
-  isAuthenticated: false
+  isAuthenticated: undefined
 };
 
 /**
@@ -26,10 +28,10 @@ const initialState: AuthType = {
 
 const reducers = {
 
-  setAuthUser: (state: any, { payload }: PayloadAction<AuthType>) => {
-    console.log (` is isAuthenticated ${!isEmpty(payload.username)}`);
-    state.isAuthenticated = !isEmpty(payload.username);
-    state.username = payload.username;
+  setAuthenticatedUser: (state: any, { payload }: PayloadAction<string>) => {
+    console.log(` is isAuthenticated ${!isEmpty(payload)}`);
+    state.isAuthenticated = !isEmpty(payload);
+    state.username = payload;
   },
 
   // setError: (state: any, { payload }: PayloadAction<AuthType>) => {
@@ -37,6 +39,8 @@ const reducers = {
   // },
 
 };
+
+
 
 /**
  * Step 2: Create the slice instance
@@ -62,23 +66,64 @@ export function setAuthToken(token: string) {
   return (dispatch: AppDispatch) => {
     const decoded = setJwtTokenLocalStorage(token);
     console.log(`decoded ${JSON.stringify(decoded)}`);
-    dispatch(actions.setAuthUser({
-      username: decoded.username,
-      // isAuthenticated should be true
-    }));
+    dispatch(actions.setAuthenticatedUser(decoded.username));
+    // isAuthenticated should be true
   }
 }
+
+
+export function checkAuthentication() {
+  return async (dispatch: AppDispatch) => {
+    try {
+      setAuthHeaderToken(localStorage[JWT_LOCAL_STORAGE_KEY]);
+      const response = await AuthService.checkToken();
+      console.log(response.data);
+      if (response.data.username) {
+        dispatch(actions.setAuthenticatedUser(response.data.username));
+      }else {
+        console.error("invalid token");
+      }
+      return status;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+}
+
 
 export function logout() {
   return (dispatch: AppDispatch) => {
     setJwtTokenLocalStorage("");
     // Set current user to "" which will set isAuthenticated to false
-    dispatch(actions.setAuthUser({
-      username: "",
-      // isAuthenticated should be false
-    }));
+    dispatch(actions.setAuthenticatedUser(""));
+    // isAuthenticated should be false
+
   }
 }
+
+
+// export function checkAuthentication() {
+//   return async (dispatch: AppDispatch) => {
+//     try {
+//       const tokenFromLocalStorage = localStorage[JWT_LOCAL_STORAGE_KEY];
+//       if (tokenFromLocalStorage) {
+//         setAuthHeaderToken(tokenFromLocalStorage);
+//         const response = await AuthService.checkToken();
+
+//         dispatch(actions.setAuthUser({
+//           username: response.data.username,
+//           // isAuthenticated should be true
+//         }));
+//         return response.data.status;
+//       }
+//     } catch (err) {
+//       console.error(err);
+//     }
+//     return false;
+//   }
+// }
+
 
 /**
  * Set token to Auth header
