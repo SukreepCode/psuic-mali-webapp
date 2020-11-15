@@ -7,7 +7,7 @@ import { AppService } from './app.service';
  */
 
 import { UsersModule } from './admin/users/users.module';
-import { RolesModule } from './admin/roles/roles.module';
+// import { RolesModule } from './admin/roles/roles.module';
 import { CriteriaModule } from './admin/criteria/criteria.module';
 import { EvaluationModule } from './admin/evaluation/evaluation.module';
 import { SemestersModule } from './admin/semesters/semesters.module';
@@ -24,7 +24,7 @@ import { AuthModule } from './auth/auth.module';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersEntity } from './admin/users/users.entity';
-import { RolesEntity } from './admin/roles/roles.entity';
+// import { RolesEntity } from './admin/roles/roles.entity';
 import { CriteriaEntity } from './admin/criteria/criteria.entity';
 import { EvaluationEntity } from './admin/evaluation/evaluation.entity';
 import { SemestersEntity } from './admin/semesters/semesters.entity';
@@ -36,7 +36,7 @@ import { EnrollEntity } from './admin/enroll/enroll.entity';
       name: 'default',
       type: 'sqlite',
       database: './app.sqlite',
-      entities: [UsersEntity, RolesEntity, CriteriaEntity, EvaluationEntity, SemestersEntity, EnrollEntity],
+      entities: [UsersEntity, CriteriaEntity, EvaluationEntity, SemestersEntity, EnrollEntity],
       synchronize: true,
       migrations: ['dist/app/migrations/*{.ts,.js}'],
       migrationsTableName: 'migrations_typeorm',
@@ -47,7 +47,7 @@ import { EnrollEntity } from './admin/enroll/enroll.entity';
       keepConnectionAlive: true,
     }),
     UsersModule,
-    RolesModule,
+    // RolesModule,
     CriteriaModule,
     EvaluationModule,
     SemestersModule,

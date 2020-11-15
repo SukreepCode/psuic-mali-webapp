@@ -29,9 +29,15 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/check')
-  check(@Request() req) {
-    if (req.user)
-      return { status: true, ...req.user }
+  async check(@Request() req) {
+    if (req.user) {
+      const { username } = req.user;
+      const findUser = await this.usersService.findByUsername(username);
+      console.log(findUser);
+      if (findUser) {
+        return { status: true, username, admin: findUser.admin, role: findUser.role }
+      }
+    }
     return { status: false }
   }
 

@@ -13,7 +13,8 @@ import {
   UpdateDateColumn,
 
 } from 'typeorm';
-import { RolesEntity } from '../roles/roles.entity';
+
+type Role = "teacher" | "student";
 
 @Entity()
 export class UsersEntity {
@@ -35,15 +36,8 @@ export class UsersEntity {
   @Column()
   password: string;
 
-  // @ManyToMany(type => RolesEntity)
-  // @JoinTable()
-  // role: RolesEntity;
-
-  @ManyToOne(
-    () => RolesEntity,
-    (item) => item.id,
-  )
-  role: RolesEntity;
+  @Column()
+  role: Role;
 
   @OneToMany((type) => EnrollEntity, (enroll) => enroll.id)
   enroll: EnrollEntity;
