@@ -10,6 +10,8 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from '../admin/users/users.dto';
 import { assignObject } from '../common/utils';
 
+import { Role } from '../admin/users/users.entity';
+
 @Controller('auth')
 // @UseFilters(AuthExceptionFilter)
 export class AuthController {
@@ -29,14 +31,14 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/check')
-  async check(@Request() req) {
+  async check(@Request() req) : Promise<{ status: boolean, username?: string, role?: Role }> {
     if (req.user) {
       const { username } = req.user;
       const findUser = await this.usersService.findByUsername(username);
       console.log(findUser);
-      // findUser.role
+
       if (findUser) { 
-        return { status: true, username, role: "admin" }
+        return { status: true, username, role: findUser.role }
       }
     }
     return { status: false }

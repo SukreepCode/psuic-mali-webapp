@@ -14,7 +14,7 @@ import {
 
 } from 'typeorm';
 
-type Role = "teacher" | "student" | "admin";
+export type Role = "teacher" | "student" | "admin";
 
 @Entity()
 export class UsersEntity {
