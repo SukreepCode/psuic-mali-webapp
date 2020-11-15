@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Error from "./Auth/Error";
+import Error from "./Error";
 
 const PermissionDenied = (props: any) => {
 

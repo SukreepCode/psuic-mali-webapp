@@ -8,9 +8,9 @@ import Login from './Auth/Login';
 import Logout from './Auth/Logout';
 
 import ValidatingToken from './Auth/ValidatingToken';
-import NotFound from './NotFound';
-import PermissionDenied from './PermissionDenied';
-import Unauthorized from './Unauthorized';
+import NotFound from './Error/NotFound';
+import PermissionDenied from './Error/PermissionDenied';
+import Unauthorized from './Error/Unauthorized';
 
 import Admin from './Admin/Admin';
 import Evaluation from './Evaluation/Evaluation';

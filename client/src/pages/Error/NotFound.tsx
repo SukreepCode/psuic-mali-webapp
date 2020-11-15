@@ -1,5 +1,5 @@
 import React from "react";
-import Error from "./Auth/Error";
+import Error from "./Error";
 
 const NotFound = () => {
   return (

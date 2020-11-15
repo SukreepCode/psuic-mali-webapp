@@ -1,16 +1,12 @@
 import React from "react";
-import { Helmet } from "react-helmet";
-import { Container, Typography, Grid, Paper } from "@material-ui/core";
-import useStyles from "./Unauthorized.style";
-// import { Link } from "react-router-dom";
-import Error from "./Auth/Error";
+import Error from "./Error";
 
-import { LOGIN_PATH } from './Routes';
+import { LOGIN_PATH } from '../Routes';
 
 const REDIRECT_COUNTDOWN = 2; // seconds
 
 const Unauthorized = () => {
-  const classes = useStyles();
+
   return (
 
     <Error
