@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 import { Box, Container, Button, TextField, Link, Typography, FormControlLabel, Checkbox } from '@material-ui/core';
-import MinimalLayout from '../layouts/Minimal/MinimalLayout';
+import { MinimalLayout } from '../../layouts';
 import useStyles from './Login.style';
-import { AlertMessage } from '../components';
+import { AlertMessage } from '../../components';
 
 import { useForm, Controller } from 'react-hook-form';
 
 import { useSelector, useDispatch } from "react-redux";
-import * as Auth from '../services/auth';
+import * as Auth from '../../services/auth';
 
 interface IFormInput {
   username: string;
@@ -40,8 +40,8 @@ const Login = (props: any) => {
 
   useEffect(() => {
     if (auth.isAuthenticated) {
-        history.push(loginSuccessRoute);
-      }
+      history.push(loginSuccessRoute);
+    }
   }, [auth]);
 
   const onSubmit = async (data: IFormInput) => {

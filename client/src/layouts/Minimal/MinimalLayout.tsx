@@ -1,40 +1,49 @@
-import React from 'react';
-import { Helmet } from "react-helmet";
-import { makeStyles } from '@material-ui/styles';
-import Topbar from './components/Topbar';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/styles';
+import { useMediaQuery } from '@material-ui/core';
+
+import { Topbar, Footer } from './components';
+
+import { useSelector, useDispatch } from "react-redux";
+import * as Auth from '../../services/auth';
+
 
 const useStyles = makeStyles((theme: any) => ({
   root: {
-
+    paddingTop: 56,
+    height: '100%',
+    [theme.breakpoints.up('sm')]: {
+      paddingTop: 64
+    }
   },
+ 
   content: {
-    marginTop: 60,
-  },
+    height: '100%'
+  }
 }));
 
-const MinimalLayout = (props: any) => {
-  const { children, title } = props;
-
-  const headTitle = title || "DM Project System";
-
+const Main = (props: any) => {
+  const { children } = props;
+  const dispatch = useDispatch();
+  const auth: Auth.AuthType = useSelector(Auth.selector);
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>{headTitle}</title>
-      </Helmet>
-
-      <Topbar />
-      <main className={classes.content} >{children}</main>
+    <div
+      className={clsx({
+        [classes.root]: true
+      })}
+    >
+      <Topbar color="white" isAuthentication={auth.isAuthenticated}/>
+    
+      <main className={classes.content}>
+        {children}
+        {/* <Footer /> */}
+      </main>
     </div>
   );
 };
 
-// MinimalLayout.propTypes = {
-//   children: PropTypes.node,
-//   className: PropTypes.string
-// };
-
-export default MinimalLayout;
+export default Main;

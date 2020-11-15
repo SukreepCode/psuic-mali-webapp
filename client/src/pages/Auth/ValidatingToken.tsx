@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import * as Auth from '../services/auth';
+import * as Auth from '../../services/auth';
 import { useSelector, useDispatch, connect } from "react-redux";
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 
-import { LOGIN_PATH, PERMISSION_DENIED, UNAUTHORIZED } from '../pages/Routes'
-import store from "../app/store";
+import { LOGIN_PATH, PERMISSION_DENIED, UNAUTHORIZED } from '../Routes'
+import store from "../../app/store";
 
 const dispatch = store.dispatch;
 

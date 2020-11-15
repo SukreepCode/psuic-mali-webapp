@@ -10,10 +10,10 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 // import store from "../app/store";
 import { useSelector, useDispatch } from "react-redux";
-import * as Auth from '../services/auth';
+import * as Auth from '../../services/auth';
 
 import ValidatingToken from './ValidatingToken';
-import { VALIDATING_TOKEN_PATH, LOGIN_PATH } from '../pages/Routes';
+import { VALIDATING_TOKEN_PATH, LOGIN_PATH } from '../Routes';
 
 // const dispatch = store.dispatch;
 
