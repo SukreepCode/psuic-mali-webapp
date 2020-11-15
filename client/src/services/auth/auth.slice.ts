@@ -88,9 +88,13 @@ export function checkAuthentication() : AppThunk{
       
       if (username) {
         dispatch(actions.setAuthenticatedUser(username));
-
+        
+        console.log('setting role ' + role);
         // check role
-        if(role) dispatch(actions.setRole(role));
+        if(role) {
+          dispatch(actions.setRole(role));
+          console.log('setting role ' + role);
+        }
       }else {
         console.error("invalid token");
         dispatch(actions.setAuthenticatedUser(""));

@@ -26,10 +26,11 @@ const Routes: React.FunctionComponent = () => {
     <Router>
       <Switch>
 
-        <PrivateRoute unauthorizedPath={LOGIN_PATH} exact path="/" component={Home} />
+        <PrivateRoute roles={['student']} unauthorizedPath={LOGIN_PATH} exact path="/" component={Home} />
         <Route exact path={LOGIN_PATH} >
           <Login loginSuccessRoute="/evaluation" />
         </Route>
+
         <Route path={PERMISSION_DENIED} component={PermissionDenied} />
         <Route path={UNAUTHORIZED} component={Unauthorized} />
         <Route path={LOGOUT_PATH} component={Logout} />

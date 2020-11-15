@@ -13,7 +13,8 @@ import { useSelector, useDispatch } from "react-redux";
 import * as Auth from '../../services/auth';
 
 // import ValidatingToken from './ValidatingToken';
-import { VALIDATING_TOKEN_PATH, LOGIN_PATH, UNAUTHORIZED } from '../Routes';
+import { VALIDATING_TOKEN_PATH, LOGIN_PATH, UNAUTHORIZED, PERMISSION_DENIED } from '../Routes';
+import { Dictionary } from '../../common/types';
 
 // const dispatch = store.dispatch;
 
@@ -25,7 +26,7 @@ interface PropsType extends RouteProps {
 }
 
 export const PrivateRoute: React.FC<PropsType> = props => {
- 
+
   let location = useLocation();
   const auth: Auth.AuthType = useSelector(Auth.selector);
 
@@ -35,12 +36,30 @@ export const PrivateRoute: React.FC<PropsType> = props => {
   const unauthorizedPath = props.unauthorizedPath ? props.unauthorizedPath : UNAUTHORIZED;
 
   let redirectPath = '';
+  const redirectState : Dictionary= {};
   if (!auth.isAuthenticated) {
     redirectPath = unauthorizedPath;
   }
-  if (auth.isAuthenticated && !isAllowed) {
-    redirectPath = restrictedPath;
+  // if (auth.isAuthenticated && !isAllowed) {
+  //   redirectPath = restrictedPath;
+  // }
+
+  console.log(allowedRoles);
+
+  if (auth.isAuthenticated && auth.role) {
+    if (!allowedRoles.includes(auth.role)){
+      redirectPath = PERMISSION_DENIED;
+      const nextRoute = `${location.pathname}${location.search}`;
+      redirectState['message'] = 
+        `You don't be allowed to access this page (${nextRoute}). 
+        Because your role is ${auth.role}.`;
+    }
+    // Allow admin all path
+    if (auth.role === "admin")
+      redirectPath = '';
   }
+
+  console.log(redirectPath);
 
   let renderComponent: any;
   /**
@@ -50,7 +69,10 @@ export const PrivateRoute: React.FC<PropsType> = props => {
   if (auth.isAuthenticated === undefined) {
     renderComponent = () => <Route {...props} component={ValidatingToken} render={undefined} />
   } else {
-    renderComponent = () => <Redirect to={{ pathname: redirectPath }} />;
+    renderComponent = () => <Redirect to={{ 
+      pathname: redirectPath,
+      state: redirectState
+    }} />;
   }
 
   if (redirectPath) {
@@ -78,5 +100,5 @@ const ValidatingToken = (props: any) => {
 
   }, []);
 
-  return ( <> </> );
+  return (<> </>);
 };
