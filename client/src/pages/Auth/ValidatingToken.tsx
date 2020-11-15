@@ -22,11 +22,16 @@ const ValidatingToken = (props: any) => {
     if (props.nextRoute) {
       setNextRoute(props.nextRoute);
       console.log(`Next route by props: ${props.nextRoute}`);
+
+    } else if (props.location.state?.nextRoute) {
+      console.log(`Role: ${props.location.state?.allowedRoles}`);
+      setNextRoute(props.location.state.nextRoute);
+      console.log(`Next route by location.state: ${props.location.state.nextRoute}`);
+
     } else if (searchParams.has("next")) {
       setNextRoute(searchParams.get("next") as string);
       console.log(`Next route by search params: ${searchParams.get("next")}`);
-    } else if (props.location.state?.nextRoute) {
-      setNextRoute(props.location.state.nextRoute);
+
     } else {
       history.push(LOGIN_PATH);
     }
@@ -35,7 +40,7 @@ const ValidatingToken = (props: any) => {
     const checkAuth = async () => {
       await dispatch(Auth.checkAuthentication());
     }
-   
+
     checkAuth();
 
   }, []);
@@ -54,6 +59,27 @@ const ValidatingToken = (props: any) => {
     }
     console.log(`ValidatingToken ${auth.isAuthenticated}`);
   }
+
+  // const navigateToNextRoute = () => {
+  //   const allowedRole = props.location.state?.nextRoute || [];
+  //   if( allowedRole.length === 0) return navigateToNextRouteWithAuthen();
+
+  //   if (nextRoute !== "") {
+
+  //     // checking role
+  //     if(auth.isAuthenticated && auth.role) {
+  //       if(allowedRole.include(auth.role)){
+
+  //       }
+  //     }
+      
+
+  //   } else if (auth.isAuthenticated === false) {
+  //     history.push(UNAUTHORIZED);
+  //   }
+  //   console.log(`ValidatingToken ${auth.isAuthenticated}`);
+  // }
+
 
   return (
     <div>

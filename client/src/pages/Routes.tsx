@@ -37,7 +37,7 @@ const Routes: React.FunctionComponent = () => {
         <Route path={VALIDATING_TOKEN_PATH} component={ValidatingToken} />
 
         <PrivateRoute path={`/admin`} component={Admin} />
-        <PrivateRoute path={`/evaluation`} component={Evaluation} />
+        <PrivateRoute roles={['teacher']} path={`/evaluation`} component={Evaluation} />
 
         {/* Catch all route */}
         <Route component={NotFound} />

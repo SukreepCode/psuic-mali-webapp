@@ -19,6 +19,7 @@ import { VALIDATING_TOKEN_PATH, LOGIN_PATH } from '../Routes';
 
 interface PropsType extends RouteProps {
   // loginPath: string;
+  roles?: string[]
   isAllowed?: boolean;
   restrictedPath?: string;
 }
@@ -28,10 +29,10 @@ export const PrivateRoute: React.FC<PropsType> = props => {
   let location = useLocation();
   const auth: Auth.AuthType = useSelector(Auth.selector);
 
+
+  const allowedRoles = props.roles ? props.roles : [];
   const isAllowed = props.isAllowed ? props.isAllowed : true;
   const restrictedPath = props.restrictedPath ? props.restrictedPath : "/error";
-
-  console.log(`PrivateRoute: ${auth.isAuthenticated}`);
 
   let redirectPath = '';
   if (!auth.isAuthenticated) {
@@ -43,10 +44,26 @@ export const PrivateRoute: React.FC<PropsType> = props => {
 
   let renderComponent: any;
   let nextRoute: any;
+
+  /**
+   * Auth didn't verify yet
+   */
+  
   if (auth.isAuthenticated === undefined) {
     nextRoute = encodeURI(`${location.pathname}${location.search}`);
-    console.log('next ' + nextRoute)
-    renderComponent = () => <Redirect to={{ pathname: VALIDATING_TOKEN_PATH, search: `?next=${nextRoute}`, state: { nextRoute: nextRoute } }} />;
+    console.log('next ' + nextRoute);
+
+    renderComponent = () => <Redirect to={{
+      pathname: VALIDATING_TOKEN_PATH,
+      search: `?next=${nextRoute}`,
+      state: { 
+        nextRoute: nextRoute,
+        allowedRoles
+      }
+    }} />;
+
+    
+
   } else {
     renderComponent = () => <Redirect to={{ pathname: redirectPath }} />;
   }
@@ -61,6 +78,5 @@ export const PrivateRoute: React.FC<PropsType> = props => {
     return <Route {...props} />;
   }
 };
-// withRouter(Login)
 
 export default PrivateRoute;

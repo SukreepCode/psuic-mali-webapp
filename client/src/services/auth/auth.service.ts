@@ -1,5 +1,7 @@
 import { http } from '../config';
 import { AxiosResponse } from 'axios';
+import { UserRole } from '../user/user.type';
+
 
 export type LoginParams = {
   username: string;
@@ -17,6 +19,8 @@ export function login(data: LoginParams): Promise<AxiosResponse<LoginReturn>> {
 export type checkTokenReturn = {
   status: boolean;
   username?: string;
+  admin?: boolean;
+  role?: UserRole;
 }
 
 export function checkToken(): Promise<AxiosResponse<checkTokenReturn>> {

@@ -34,8 +34,9 @@ export class AuthController {
       const { username } = req.user;
       const findUser = await this.usersService.findByUsername(username);
       console.log(findUser);
-      if (findUser) {
-        return { status: true, username, admin: findUser.admin, role: findUser.role }
+      // findUser.role
+      if (findUser) { 
+        return { status: true, username, role: "admin" }
       }
     }
     return { status: false }

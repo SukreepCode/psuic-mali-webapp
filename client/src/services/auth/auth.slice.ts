@@ -9,12 +9,15 @@ import { setJwtTokenLocalStorage, setAuthHeaderToken } from './auth.helper';
 import Jwt from './jwt';
 import { JWT_LOCAL_STORAGE_KEY } from './auth.constant';
 
+import { UserRole } from '../user/user.type';
+
 /**
  * Auth Slice: Combine Actions & Reducers (Redux Toolkit)
  */
 
 export type AuthType = {
   isAuthenticated: boolean | undefined;
+  role?: UserRole;
   username?: string;
 };
 
@@ -32,6 +35,10 @@ const reducers = {
     console.log(` is isAuthenticated ${!isEmpty(payload)}`);
     state.isAuthenticated = !isEmpty(payload);
     state.username = payload;
+  },
+
+  setRole: (state: any, { payload }: PayloadAction<UserRole>) => {
+    state.role = payload;
   },
 
   // setError: (state: any, { payload }: PayloadAction<AuthType>) => {
@@ -77,9 +84,13 @@ export function checkAuthentication() : AppThunk{
     try {
       setAuthHeaderToken(localStorage[JWT_LOCAL_STORAGE_KEY]);
       const response = await AuthService.checkToken();
-      // console.log(response.data);
-      if (response.data.username) {
-        dispatch(actions.setAuthenticatedUser(response.data.username));
+      const { username , role } = response.data;
+      
+      if (username) {
+        dispatch(actions.setAuthenticatedUser(username));
+
+        // check role
+        if(role) dispatch(actions.setRole(role));
       }else {
         console.error("invalid token");
         dispatch(actions.setAuthenticatedUser(""));
@@ -99,7 +110,6 @@ export function logout() {
     try {
     setJwtTokenLocalStorage("");
     // Set current user to "" which will set isAuthenticated to false
-    // dispatch(actions.setAuthenticatedUser(""));
     // isAuthenticated should be false
     } catch(err){
       console.log('Invalid Token: Logout success');
@@ -109,41 +119,6 @@ export function logout() {
   }
 }
 
-
-// export function checkAuthentication() {
-//   return async (dispatch: AppDispatch) => {
-//     try {
-//       const tokenFromLocalStorage = localStorage[JWT_LOCAL_STORAGE_KEY];
-//       if (tokenFromLocalStorage) {
-//         setAuthHeaderToken(tokenFromLocalStorage);
-//         const response = await AuthService.checkToken();
-
-//         dispatch(actions.setAuthUser({
-//           username: response.data.username,
-//           // isAuthenticated should be true
-//         }));
-//         return response.data.status;
-//       }
-//     } catch (err) {
-//       console.error(err);
-//     }
-//     return false;
-//   }
-// }
-
-
-/**
- * Set token to Auth header
- */
-
-// export function setToken(token: string) {
-//   return (dispatch: AppDispatch) => {
-//     const decoded = setJwtTokenLocalStorage(token);
-//     dispatch(actions.setAuthUser({
-//       username: decoded
-//     }));
-//   }
-// }
 
 /**
  * Todo: Add type later

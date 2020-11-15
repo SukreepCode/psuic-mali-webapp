@@ -14,7 +14,7 @@ import {
 
 } from 'typeorm';
 
-type Role = "teacher" | "student";
+type Role = "teacher" | "student" | "admin";
 
 @Entity()
 export class UsersEntity {
@@ -29,9 +29,6 @@ export class UsersEntity {
 
   @Column({ length: 255 })
   username: string;
-
-  @Column({ default: false })
-  admin: boolean;
 
   @Column()
   password: string;

@@ -8,6 +8,8 @@ import { JWT_LOCAL_STORAGE_KEY, HTTP_HEADER_AUTHORIZATION_KEY } from './auth.con
 import { isEmpty } from '../../common';
 import Jwt, { DecodedJwtObject } from './jwt';
 
+import {UserRole} from '../user/user.type';
+
 // -------------------------------------------
 // Set Header for axios
 // 
@@ -41,45 +43,4 @@ export function setJwtTokenLocalStorage(token: string | ""): DecodedJwtObject {
 };
 
 // -------------------------------------------
-
-// export function checkAuthenticationLocally(): boolean {
-
-//   const tokenFromLocalStorage = localStorage[JWT_LOCAL_STORAGE_KEY];
-
-//   // Check for token
-//   if (tokenFromLocalStorage) {
-
-//     setAuthHeaderToken(tokenFromLocalStorage);
-//     try {
-//       const jwt = new Jwt();
-//       const decodedJwt = jwt.decode(tokenFromLocalStorage);
-
-//       // isAuthenticated will be changed on decoded data from JWT
-//       store.dispatch(AuthSlice.actions.setAuthUser({
-//         username: decodedJwt.username
-//       }));
-
-//       return !jwt.isExpire();
-
-//     } catch (e) {
-//       console.error("Invalid JWT Token");
-//     }
-//   }
-//   return false;
-// };
 // 
-// export async function checkAuthentication() {
-//   try {
-//     setAuthHeaderToken(localStorage[JWT_LOCAL_STORAGE_KEY]);
-//     const response = await AuthService.checkToken();
-//     console.log(response.data);
-//     if (response.data.username) {
-//       store.dispatch(AuthSlice.actions.setAuthenticatedUser(response.data.username));
-//     } else {
-//       console.error("invalid token");
-//     }
-//     return status;
-//   } catch (err) {
-//     console.error(err);
-//   }
-// }
