@@ -3,7 +3,7 @@ import * as Auth from '../../services/auth';
 import { useSelector, useDispatch, connect } from "react-redux";
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 
-import { LOGIN_PATH, PERMISSION_DENIED, UNAUTHORIZED } from '../Routes'
+import { LOGIN_PATH, PERMISSION_DENIED, UNAUTHORIZED, VALIDATING_TOKEN_PATH } from '../Routes'
 import store from "../../app/store";
 
 const dispatch = store.dispatch;
@@ -16,6 +16,8 @@ const ValidatingToken = (props: any) => {
 
   useEffect(() => {
 
+    console.log(props);
+    
     const searchParams = new URLSearchParams(window.location.search);
     console.log(searchParams.has("next"));
 
@@ -32,8 +34,14 @@ const ValidatingToken = (props: any) => {
       setNextRoute(searchParams.get("next") as string);
       console.log(`Next route by search params: ${searchParams.get("next")}`);
 
+    } else if(auth.isAuthenticated === undefined){
+      console.log(`push ${VALIDATING_TOKEN_PATH}`)
+      history.push(VALIDATING_TOKEN_PATH);
+    
     } else {
+      console.log(`push ${LOGIN_PATH}`)
       history.push(LOGIN_PATH);
+      
     }
 
 
@@ -87,4 +95,4 @@ const ValidatingToken = (props: any) => {
   );
 }
 
-export default withRouter(ValidatingToken);
+export default ValidatingToken;

@@ -12,58 +12,43 @@ import { Link as RouterLink, withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import * as Auth from '../../services/auth';
 
-import ValidatingToken from './ValidatingToken';
-import { VALIDATING_TOKEN_PATH, LOGIN_PATH } from '../Routes';
+// import ValidatingToken from './ValidatingToken';
+import { VALIDATING_TOKEN_PATH, LOGIN_PATH, UNAUTHORIZED } from '../Routes';
 
 // const dispatch = store.dispatch;
 
 interface PropsType extends RouteProps {
-  // loginPath: string;
+  unauthorizedPath?: string;
   roles?: string[]
   isAllowed?: boolean;
   restrictedPath?: string;
 }
 
 export const PrivateRoute: React.FC<PropsType> = props => {
-
+ 
   let location = useLocation();
   const auth: Auth.AuthType = useSelector(Auth.selector);
-
 
   const allowedRoles = props.roles ? props.roles : [];
   const isAllowed = props.isAllowed ? props.isAllowed : true;
   const restrictedPath = props.restrictedPath ? props.restrictedPath : "/error";
+  const unauthorizedPath = props.unauthorizedPath ? props.unauthorizedPath : UNAUTHORIZED;
 
   let redirectPath = '';
   if (!auth.isAuthenticated) {
-    redirectPath = LOGIN_PATH;
+    redirectPath = unauthorizedPath;
   }
   if (auth.isAuthenticated && !isAllowed) {
     redirectPath = restrictedPath;
   }
 
   let renderComponent: any;
-  let nextRoute: any;
-
   /**
    * Auth didn't verify yet
    */
-  
+
   if (auth.isAuthenticated === undefined) {
-    nextRoute = encodeURI(`${location.pathname}${location.search}`);
-    console.log('next ' + nextRoute);
-
-    renderComponent = () => <Redirect to={{
-      pathname: VALIDATING_TOKEN_PATH,
-      search: `?next=${nextRoute}`,
-      state: { 
-        nextRoute: nextRoute,
-        allowedRoles
-      }
-    }} />;
-
-    
-
+    renderComponent = () => <Route {...props} component={ValidatingToken} render={undefined} />
   } else {
     renderComponent = () => <Redirect to={{ pathname: redirectPath }} />;
   }
@@ -80,3 +65,18 @@ export const PrivateRoute: React.FC<PropsType> = props => {
 };
 
 export default PrivateRoute;
+
+const ValidatingToken = (props: any) => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+
+    const checkAuth = async () => {
+      await dispatch(Auth.checkAuthentication());
+    }
+    checkAuth();
+
+  }, []);
+
+  return ( <> </> );
+};

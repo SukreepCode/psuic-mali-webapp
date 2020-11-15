@@ -26,7 +26,7 @@ const Routes: React.FunctionComponent = () => {
     <Router>
       <Switch>
 
-        <PrivateRoute exact path="/" component={Home} />
+        <PrivateRoute unauthorizedPath={LOGIN_PATH} exact path="/" component={Home} />
         <Route exact path={LOGIN_PATH} >
           <Login loginSuccessRoute="/evaluation" />
         </Route>

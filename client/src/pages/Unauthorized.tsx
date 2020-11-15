@@ -13,7 +13,7 @@ const Unauthorized = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>Unauthorized</title>
-        {/* <meta http-equiv="refresh" content={`2;url=${LOGIN_PATH}`} /> */}
+        <meta http-equiv="refresh" content={`2;url=${LOGIN_PATH}`} />
       </Helmet>
       <Grid
         container
