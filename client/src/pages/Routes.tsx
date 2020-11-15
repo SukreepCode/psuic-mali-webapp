@@ -29,7 +29,9 @@ const Routes: React.FunctionComponent = () => {
     <Router>
       <Switch>
 
-        <PrivateRoute unauthorizedPath={LOGIN_PATH} exact path="/" component={Home} />
+        {/** 
+         * System Route
+         */}
         <Route exact path={LOGIN_PATH} >
           <Login loginSuccessRoute="/evaluation" />
         </Route>
@@ -37,14 +39,22 @@ const Routes: React.FunctionComponent = () => {
         <Route path={PERMISSION_DENIED} component={PermissionDenied} />
         <Route path={UNAUTHORIZED} component={Unauthorized} />
         <Route path={EXCEPTION_PATH} component={Exception} />
+      
         <Route path={LOGOUT_PATH} component={Logout} />
-        
-        {/* <Route path={VALIDATING_TOKEN_PATH} component={ValidatingToken} /> */}
 
+        {/** 
+         * App Route
+         */}
+
+        <PrivateRoute roles={['teacher']} exact path="/" unauthorizedPath={LOGIN_PATH} 
+          component={()=> <Redirect to={{ pathname: '/evaluation' }} />} />
+        
         <PrivateRoute path={`/admin`} component={Admin} />
         <PrivateRoute roles={['teacher']} path={`/evaluation`} component={Evaluation} />
 
-        {/* Catch all route */}
+        {/** 
+         * Catch all route
+         */}
         <Route component={NotFound} />
       </Switch>
 

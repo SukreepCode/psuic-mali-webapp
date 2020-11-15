@@ -16,9 +16,11 @@ import { UserRole } from '../user/user.type';
  */
 
 export type AuthType = {
-  isAuthenticated: boolean | undefined;
+  isAuthenticated?: boolean;
   role?: UserRole;
   username?: string;
+  error?: string;
+  errorMessage?: string;
 };
 
 const initialState: AuthType = {
@@ -41,9 +43,10 @@ const reducers = {
     state.role = payload;
   },
 
-  // setError: (state: any, { payload }: PayloadAction<AuthType>) => {
-  //   state.error = payload.error;
-  // },
+  setError: (state: any, { payload }: PayloadAction<AuthType>) => {
+    state.error = payload.error;
+    state.errorMessage = payload.errorMessage;
+  },
 
 };
 
@@ -89,19 +92,27 @@ export function checkAuthentication() : AppThunk{
       if (username) {
         dispatch(actions.setAuthenticatedUser(username));
         
-        console.log('setting role ' + role);
         // check role
-        if(role) {
-          dispatch(actions.setRole(role));
-          console.log('setting role ' + role);
-        }
+        if(role) dispatch(actions.setRole(role));
       }else {
         console.error("invalid token");
         dispatch(actions.setAuthenticatedUser(""));
       }
       return status;
     } catch (err) {
-      console.error(err);
+
+      if(err.message == "Network Error"){
+        dispatch(actions.setError({
+          error: "Can't connect to the server",
+          errorMessage: err.message
+        }));
+      }else {
+        dispatch(actions.setError({
+          error: err.message,
+          errorMessage: err.stack
+        }));
+      }
+      console.error(JSON.stringify(err));
       dispatch(actions.setAuthenticatedUser(""));
     }
   }

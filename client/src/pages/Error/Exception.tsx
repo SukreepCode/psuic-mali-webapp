@@ -9,14 +9,14 @@ const Exception = (props: any) => {
     if (props.location.state?.message) {
       setSubtitle(props.location.state?.message);
     } else {
-      setSubtitle("Throw Exception");
+      setSubtitle("Something wrong in this page.");
     }
   }, []);
 
   return (
     <Error
-      title="Exception"
-      heading="Exception"
+      title="Something Wrong"
+      heading="Something Wrong"
       subtitle={subtitle}
       imageUrl="/images/undraw_fixing_bugs_w7gi.svg"
     />

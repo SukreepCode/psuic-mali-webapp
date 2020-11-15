@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as Auth from '../../services/auth';
 
 // import ValidatingToken from './ValidatingToken';
-import { VALIDATING_TOKEN_PATH, LOGIN_PATH, UNAUTHORIZED, PERMISSION_DENIED } from '../Routes';
+import { VALIDATING_TOKEN_PATH, LOGIN_PATH, UNAUTHORIZED, PERMISSION_DENIED, EXCEPTION_PATH } from '../Routes';
 import { Dictionary } from '../../common/types';
 
 // const dispatch = store.dispatch;
@@ -37,9 +37,15 @@ export const PrivateRoute: React.FC<PropsType> = props => {
 
   let redirectPath = '';
   const redirectState : Dictionary= {};
+
   if (!auth.isAuthenticated) {
     redirectPath = unauthorizedPath;
+    if(auth.error){
+      redirectPath = EXCEPTION_PATH;
+      redirectState['message'] = `${auth.error}. Reason: ${auth.errorMessage}`;
+    }
   }
+
   // if (auth.isAuthenticated && !isAllowed) {
   //   redirectPath = restrictedPath;
   // }
@@ -67,6 +73,9 @@ export const PrivateRoute: React.FC<PropsType> = props => {
    */
 
   if (auth.isAuthenticated === undefined) {
+    /**
+     * Route to ValidatingToken for rechecking JWT token again to the server
+     */
     renderComponent = () => <Route {...props} component={ValidatingToken} render={undefined} />
   } else {
     renderComponent = () => <Redirect to={{ 
