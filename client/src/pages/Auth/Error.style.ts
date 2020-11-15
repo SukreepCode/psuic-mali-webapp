@@ -13,6 +13,14 @@ const useStyles = makeStyles((theme: any) => ({
     display: 'inline-block',
     maxWidth: '100%',
     width: 560
+  },
+  heading: {
+    marginBottom: 12,
+    fontWeight: "bold"
+  },
+  subtitle: {
+    fontSize: 18,
+    lineHeight: 1.5
   }
 }));
 

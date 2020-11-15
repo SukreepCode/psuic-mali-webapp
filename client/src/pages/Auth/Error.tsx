@@ -44,10 +44,10 @@ export const Error: React.FC<PropsType> = ({
           xs={12}
         >
           <div className={classes.content}>
-            <Typography variant="h1">
+            <Typography className={classes.heading} variant="h1">
               {heading}
             </Typography>
-            <Typography variant="subtitle1">
+            <Typography className={classes.subtitle} variant="body1">
               {subtitle}
             </Typography>
             {props.imageUrl &&
