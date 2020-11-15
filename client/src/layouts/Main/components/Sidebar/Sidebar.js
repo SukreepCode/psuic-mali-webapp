@@ -52,40 +52,40 @@ const Sidebar = props => {
 
   const pages = [
     {
-      title: 'Evaluation',
-      href: '/evaluation',
+      title: 'Home',
+      href: '/admin',
       icon: <HomeIcon />
     },
     {
-      title: 'Dashboard',
-      href: '/dashboard',
+      title: 'Criteria',
+      href: '/admin/data/criteria',
       icon: <DashboardIcon />
     },
     {
       title: 'Users',
-      href: '/users',
+      href: '/admin/data/user',
       icon: <PeopleIcon />
     },
-    {
-      title: 'Products',
-      href: '/products',
-      icon: <ShoppingBasketIcon />
-    },
-    {
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
-    },
-    {
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
-    },
-    {
-      title: 'Icons',
-      href: '/icons',
-      icon: <ImageIcon />
-    },
+    // {
+    //   title: 'Products',
+    //   href: '/products',
+    //   icon: <ShoppingBasketIcon />
+    // },
+    // {
+    //   title: 'Authentication',
+    //   href: '/sign-in',
+    //   icon: <LockOpenIcon />
+    // },
+    // {
+    //   title: 'Typography',
+    //   href: '/typography',
+    //   icon: <TextFieldsIcon />
+    // },
+    // {
+    //   title: 'Icons',
+    //   href: '/icons',
+    //   icon: <ImageIcon />
+    // },
     {
       title: 'Account',
       href: '/account',

@@ -3,9 +3,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { Avatar, Typography } from '@material-ui/core';
+import { Avatar, Typography, Theme } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Profile = props => {
+const Profile = (props: any) => {
   const { className, user, ...rest } = props;
 
   const classes = useStyles();
@@ -47,10 +47,6 @@ const Profile = props => {
       <Typography variant="body2">{user.bio}</Typography>
     </div>
   );
-};
-
-Profile.propTypes = {
-  className: PropTypes.string
 };
 
 export default Profile;

@@ -3,7 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { AppBar, Toolbar, Badge, Hidden, IconButton, Box, Popover, ListItemText, ListItemIcon, Divider, ListItem, Backdrop } from '@material-ui/core';
+import { AppBar, Theme, Toolbar, Badge, Hidden, IconButton, Box, Popover, ListItemText, ListItemIcon, Divider, ListItem, Backdrop } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
@@ -12,7 +12,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import { Profile } from './components';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     // boxShadow: 'none'
   },
@@ -25,12 +25,12 @@ const useStyles = makeStyles(theme => ({
   popover: {
     width: "240px"
   },
-  logo:{
+  logo: {
     height: 35
   }
 }));
 
-const Topbar = props => {
+const Topbar = (props: any) => {
   const { className, onSidebarOpen, ...rest } = props;
 
   const classes = useStyles();
@@ -38,7 +38,7 @@ const Topbar = props => {
   // Popup
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -77,7 +77,7 @@ const Topbar = props => {
           <img
             className={classes.logo}
             alt="Logo"
-            src="/images/logo-blue.png" 
+            src="/images/logo.png"
           />
         </RouterLink>
         <div className={classes.flexGrow} />
@@ -105,7 +105,7 @@ const Topbar = props => {
           <Box p={3} className={classes.popover}>
             <Profile user={user} />
           </Box>
-          <Divider className={classes.divider} />
+          <Divider />
           <ListItem button component="a" href="#">
             <ListItemIcon>
               <AccountCircleIcon />
@@ -126,16 +126,11 @@ const Topbar = props => {
         </Popover>
 
         <Hidden lgUp>
-          <Backdrop className={classes.backdrop} open={open} onClick={handleClose} />
+          <Backdrop open={open} onClick={handleClose} />
         </Hidden>
       </Toolbar>
     </AppBar>
   );
-};
-
-Topbar.propTypes = {
-  className: PropTypes.string,
-  onSidebarOpen: PropTypes.func
 };
 
 export default Topbar;
