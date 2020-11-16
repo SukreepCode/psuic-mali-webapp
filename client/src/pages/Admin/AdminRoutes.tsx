@@ -5,7 +5,7 @@ import { MainLayout } from '../../layouts';
 
 import NotFound from '../Error/NotFound';
 
-import DataTable from './DataTable';
+import Data from './Data';
 
 import { Home } from '@material-ui/icons';
 import DashboardIcon from '@material-ui/icons/Dashboard';
@@ -15,6 +15,8 @@ import SettingsIcon from '@material-ui/icons/Settings';
 
 /**
  * This componet will handle all path in admin
+ *
+ * Nested route: https://reactrouter.com/web/example/nesting
  */
 
 const AdminRoutes = () => {
@@ -55,7 +57,7 @@ const AdminRoutes = () => {
 
       <Switch>
         <Route path={`${path}/data/:name`}>
-          <DataTable />
+          <Data />
         </Route>
 
         <Route component={NotFound} />
