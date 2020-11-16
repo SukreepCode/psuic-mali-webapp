@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 });
 
 interface Props<ObjectType> {
-  objects: ObjectType[];
+  rows: ObjectType[];
   columns: {
     key: keyof ObjectType;
     title: string;
@@ -59,7 +59,7 @@ const EditableCell = ({
 }
 
 
-function DataTable<ObjectType>({ objects, columns, updateMyData }: Props<ObjectType>) {
+function DataTable<ObjectType>({ rows, columns, updateMyData }: Props<ObjectType>) {
   const classes = useStyles();
 
   return (
@@ -70,18 +70,16 @@ function DataTable<ObjectType>({ objects, columns, updateMyData }: Props<ObjectT
           <Head columns={columns} />
 
           <TableBody>
-            {objects.map((object: any) => (
-              <TableRow key={object.id}>
+            {rows.map((row:any, index:any) => (
+              <TableRow key={row.id}>
                 {columns.map((column) => (
                   <TableCell key={String(column.key)} align="left">
-                    {/* {object[column.key]} */}
+                    {/* {row[column.key]} */}
                     <EditableCell
-
-                      value={object[column.key]}
-                      row={{ index: object.id }}
+                      value={row[column.key]}
+                      row={{ index }}
                       column={{ id: column.key }}
                       updateMyData={updateMyData}
-
                     />
                   </TableCell>
                 ))}

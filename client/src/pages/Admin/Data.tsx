@@ -11,31 +11,31 @@ interface PropTypes extends withQueryProps {
 
 }
 
-// const Data = ({ loading, payload, error, onReload }: PropTypes) => {
-  const Data = (props:any) => {
-
-    const loading = false;
-    const payload :any[]= [];
-    const error = false;
-    const onReload = false;
+const Data = ({ loading, payload, error, onReload }: PropTypes) => {
 
   const params: any = useParams();
 
   useEffect(() => {
-    // onReload();
+    onReload();
   }, []);
 
-  const [data, setData] = React.useState(() => users);
+  useEffect(() => {
+    if (payload)
+      setData(payload);
+  }, [loading]);
+
+  const [data, setData] = React.useState(() => []);
 
   const getData = () => {
-      console.log(data);
+    console.log(data);
   }
 
-  const updateMyData = (rowIndex:any, columnId:any, value:any) => {
+
+  const updateMyData = (rowIndex: any, columnId: any, value: any) => {
     // We also turn on the flag to not reset the page
     // setSkipPageReset(true)
-    setData((old:any) =>
-      old.map((row:any, index:any) => {
+    setData((old: any) =>
+      old.map((row: any, index: any) => {
         if (index === rowIndex) {
           return {
             ...old[rowIndex],
@@ -51,33 +51,31 @@ interface PropTypes extends withQueryProps {
   return (
     <>
       <h1>{params.name} Data </h1>
-      {/* {loading && <CircularProgress style={{ margin: '100px auto' }} />}
+      {loading && <CircularProgress style={{ margin: '100px auto' }} />}
 
       {error && (
         <Button onClick={onReload} variant="contained" color="secondary">
           Error, click to reload
         </Button>
-      )} */}
+      )}
 
-      {/* {!loading &&
+      {!loading &&
         !error &&
-        payload && */}
+        payload &&
         <DataTable<User>
-          objects={data}
+          rows={data}
           columns={[
-            // { key: "displayID", title: "Display ID" },
-            // { key: "username", title: "Username" },
+            { key: "displayID", title: "Display ID" },
+            { key: "username", title: "Username" },
             { key: "name", title: "Name" },
-            { key: "age", title: "age" },
-            { key: "email", title: "email" },
-            // { key: "role", title: "Role" },
+            { key: "role", title: "Role" },
           ]}
           updateMyData={updateMyData}
         />
-        {/* } */}
+      }
 
-        <Button onClick={getData} variant="contained" color="secondary">
-          Get data
+      <Button onClick={getData} variant="contained" color="secondary">
+        Get data
         </Button>
 
     </>
@@ -88,26 +86,19 @@ interface PropTypes extends withQueryProps {
 
 export interface User {
   id: number,
-  // displayID: string,
+  displayID: string,
   name: string,
-  age: number,
-  email: string,
-  // username: string,
-  // role: string
+  username: string,
+  role: string,
+  password: string;
 }
 
-export const users: User[] = [
-  { id: 0, name: "Thada", age: 27, email: "mildronize@gmail.com" },
-  { id: 1, name: "Sompong", age: 35, email: "sompong@thongmeee.com" },
-];
 const token = localStorage['jwtToken'];
 
-export default Data;
-
-// export default withQuery(Data, {
-//   method: "GET",
-//   endpoint: "/users",
-//   headers: {
-//     "Authorization": `bearer ${token}`
-//   }
-// } as Action<User[]>)
+export default withQuery(Data, {
+  method: "GET",
+  endpoint: "/users",
+  headers: {
+    "Authorization": `bearer ${token}`
+  }
+} as Action<User[]>)
