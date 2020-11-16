@@ -6,6 +6,7 @@ import { withQuery, withQueryProps } from '../../common';
 import { Action } from "react-fetching-library";
 
 import { CircularProgress, Button } from '@material-ui/core';
+import { UserService } from '../../services';
 
 interface PropTypes extends withQueryProps {
 
@@ -22,7 +23,7 @@ const Data = ({ loading, payload, error, onReload }: PropTypes) => {
   useEffect(() => {
     if (payload)
       setData(payload);
-  }, [loading]);
+  }, [loading, error, payload]);
 
   const [data, setData] = React.useState(() => []);
 
@@ -30,23 +31,15 @@ const Data = ({ loading, payload, error, onReload }: PropTypes) => {
     console.log(data);
   }
 
+  const saveData = async () => {
+    try{
+      await UserService.updateTable(data);
+      console.log(data);
+    }catch (err){
+      console.error(err.response.data);
+    }
 
-  const updateMyData = (rowIndex: any, columnId: any, value: any) => {
-    // We also turn on the flag to not reset the page
-    // setSkipPageReset(true)
-    setData((old: any) =>
-      old.map((row: any, index: any) => {
-        if (index === rowIndex) {
-          return {
-            ...old[rowIndex],
-            [columnId]: value,
-          }
-        }
-        return row
-      })
-    )
-
-  };
+  }
 
   return (
     <>
@@ -70,19 +63,22 @@ const Data = ({ loading, payload, error, onReload }: PropTypes) => {
             { key: "name", title: "Name" },
             { key: "role", title: "Role" },
           ]}
-          updateMyData={updateMyData}
+          setData={setData}
         />
       }
 
-      <Button onClick={getData} variant="contained" color="secondary">
+      {/* <Button onClick={getData} variant="contained" color="secondary">
         Get data
-        </Button>
+      </Button> */}
+
+      <Button onClick={saveData} variant="contained" color="primary">
+        Save
+      </Button>
 
     </>
   );
 }
 
-// export default Data;
 
 export interface User {
   id: number,

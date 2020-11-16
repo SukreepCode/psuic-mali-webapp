@@ -28,7 +28,7 @@ interface Props<ObjectType> {
     key: keyof ObjectType;
     title: string;
   }[];
-  updateMyData: Function;
+  setData: Function;
 }
 
 const EditableCell = ({
@@ -59,8 +59,22 @@ const EditableCell = ({
 }
 
 
-function DataTable<ObjectType>({ rows, columns, updateMyData }: Props<ObjectType>) {
+function DataTable<ObjectType>({ rows, columns, setData }: Props<ObjectType>) {
   const classes = useStyles();
+
+  const updateMyData = (rowIndex: any, columnId: any, value: any) => {
+    setData((old: any) =>
+      old.map((row: any, index: any) => {
+        if (index === rowIndex) {
+          return {
+            ...old[rowIndex],
+            [columnId]: value,
+          }
+        }
+        return row
+      })
+    )
+  };
 
   return (
     <div>
