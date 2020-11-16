@@ -1,19 +1,20 @@
 import {
-  Controller, Post, Body, Get, Put, Delete, Param,UseFilters, HttpStatus, HttpCode, UseGuards
+  Controller, Post, Body, Get, Put, Delete, Param, UseFilters, HttpStatus, HttpCode, UseGuards, Request
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './users.dto';
 import { UsersEntity } from './users.entity';
 import { assignObject } from '../../common/utils';
 
-// import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from '../admin.guard';
-import {AuthExceptionFilter} from '../../common/filters/auth-exceptions.filter';
+import { AuthExceptionFilter } from '../../common/filters/auth-exceptions.filter';
 // import { RolesGuard, Roles } from '../../common/roles';
 
 // @UseFilters(AuthExceptionFilter)
 @UseGuards(AdminGuard)
+// @UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
@@ -29,14 +30,20 @@ export class UsersController {
 
 
   @Get() // GET /users
-  async findAll(): Promise<UsersEntity[]> {
-    return await this.usersService.findAll();
+  async findAll(@Request() req): Promise<UsersEntity[]> {
+    const users = await this.usersService.findAll();
+    return users.map(user => {
+        user['password'] = '';
+        return user;
+    });
   }
 
   // @Roles('admin')
   @Get(':id') // GET /users/123
   async find(@Param('id') id: number): Promise<UsersEntity> {
-    return await this.usersService.findById(id);
+    const user = await this.usersService.findById(id);
+    user['password'] = '';
+    return user;
   }
 
   @Put(':id') // PUT /users/123
