@@ -19,7 +19,7 @@ export const withQuery = (WrappedComponent: any, fetchAction: Action, initFetch?
   return class ComponentWithQuery extends Component {
     render() {
 
-      initFetch = initFetch === undefined ? true : false;
+      initFetch = initFetch === undefined ? false : initFetch;
 
       return (
         <Query action={fetchAction} initFetch={initFetch}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { DataTable } from './components';
 
@@ -13,6 +13,11 @@ interface PropTypes extends withQueryProps {
 
 const Data = ({ loading, payload, error, onReload }: PropTypes) => {
   const params: any = useParams();
+
+  useEffect(() => {
+    onReload();
+  }, []);
+
   return (
     <>
       <h1>{params.name} Data </h1>
@@ -36,6 +41,7 @@ const Data = ({ loading, payload, error, onReload }: PropTypes) => {
             { key: "role", title: "Role" },
           ]}
         />}
+
     </>
   );
 }
@@ -60,6 +66,6 @@ export default withQuery(Data, {
   method: "GET",
   endpoint: "/users",
   headers: {
-    // "Authorization": `bearer ${token}`
+    "Authorization": `bearer ${token}`
   }
 } as Action<User[]>)
