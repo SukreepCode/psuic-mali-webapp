@@ -13,6 +13,8 @@ import PeopleIcon from '@material-ui/icons/People';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 
+import Table from './Table';
+
 /**
  * This componet will handle all path in admin
  *
@@ -60,6 +62,7 @@ const AdminRoutes = () => {
           <Data />
         </Route>
 
+        <Route path={`${path}/table`} component={Table} />
         <Route component={NotFound} />
       </Switch>
 
