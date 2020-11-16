@@ -33,8 +33,8 @@ interface Props<ObjectType> {
 
 const EditableCell = ({
   value: initialValue,
-  row: { index },
-  column: { id },
+  row: { rowIndex, rowKey },
+  column: { columnKey },
   updateMyData,
 }: any) => {
   // We need to keep and update the state of the cell normally
@@ -47,7 +47,7 @@ const EditableCell = ({
 
   // We'll only update the external data when the input is blurred
   const onBlur = () => {
-    updateMyData(index, id, value)
+    updateMyData(rowIndex, columnKey, value, rowKey)
   }
 
   // If the initialValue is changed external, sync it up with our state
@@ -62,10 +62,11 @@ const EditableCell = ({
 function DataTable<ObjectType>({ rows, columns, setData }: Props<ObjectType>) {
   const classes = useStyles();
 
-  const updateMyData = (rowIndex: any, columnId: any, value: any) => {
+  const updateMyData = (rowIndex: any, columnId: any, value: any, rowKey:any) => {
     setData((old: any) =>
       old.map((row: any, index: any) => {
         if (index === rowIndex) {
+          console.log(`Updating Row ID: ${rowKey} at data[${rowIndex}][${columnId}] = ${value}`);
           return {
             ...old[rowIndex],
             [columnId]: value,
@@ -91,8 +92,8 @@ function DataTable<ObjectType>({ rows, columns, setData }: Props<ObjectType>) {
                     {/* {row[column.key]} */}
                     <EditableCell
                       value={row[column.key]}
-                      row={{ index }}
-                      column={{ id: column.key }}
+                      row={{ rowIndex: index, rowKey: row.id }}
+                      column={{ columnKey: column.key }}
                       updateMyData={updateMyData}
                     />
                   </TableCell>
