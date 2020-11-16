@@ -1,14 +1,7 @@
-import axios from 'axios';
 import { http } from '../config';
-
-import store from "../../app/store";
-import * as AuthSlice from './auth.slice';
-import * as AuthService from './auth.service';
 import { JWT_LOCAL_STORAGE_KEY, HTTP_HEADER_AUTHORIZATION_KEY } from './auth.constant';
 import { isEmpty } from '../../common';
 import Jwt, { DecodedJwtObject } from './jwt';
-
-import {UserRole} from '../user/user.type';
 
 // -------------------------------------------
 // Set Header for axios

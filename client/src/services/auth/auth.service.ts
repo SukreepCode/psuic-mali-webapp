@@ -19,7 +19,6 @@ export function login(data: LoginParams): Promise<AxiosResponse<LoginReturn>> {
 export type checkTokenReturn = {
   status: boolean;
   username?: string;
-  admin?: boolean;
   role?: UserRole;
 }
 

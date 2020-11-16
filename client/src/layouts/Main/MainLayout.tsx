@@ -36,37 +36,19 @@ const useStyles = makeStyles((theme: any) => ({
   }
 }));
 
+export interface NavbarTypes {
+  title: string;
+  href: string;
+  icon: React.ReactNode;
+}
 
-const pages = [
-  {
-    title: 'Home',
-    href: '/admin',
-    icon: <HomeIcon />
-  },
-  {
-    title: 'Criteria',
-    href: '/admin/data/criteria',
-    icon: <DashboardIcon />
-  },
-  {
-    title: 'Users',
-    href: '/admin/data/user',
-    icon: <PeopleIcon />
-  },
-  {
-    title: 'Account',
-    href: '/account',
-    icon: <AccountBoxIcon />
-  },
-  {
-    title: 'Settings',
-    href: '/settings',
-    icon: <SettingsIcon />
-  }
-];
+interface PropTypes {
+  navbarItems: NavbarTypes[];
+  children: React.ReactNode;
+}
 
-const Main = (props: any) => {
-  const { children } = props;
+const Main: React.FC<PropTypes> = props => {
+  const { children, navbarItems } = props;
 
   const classes = useStyles();
   const theme: any = useTheme();
@@ -95,7 +77,7 @@ const Main = (props: any) => {
     >
       <Topbar onSidebarOpen={handleSidebarOpen} />
       <Sidebar
-        pages={pages}
+        pages={navbarItems}
         onClose={handleSidebarClose}
         open={shouldOpenSidebar}
         variant={isDesktop ? 'persistent' : 'temporary'}

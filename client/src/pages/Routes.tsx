@@ -14,7 +14,7 @@ import Unauthorized from './Error/Unauthorized';
 import Exception from './Error/Exception';
 
 
-import Admin from './Admin/Admin';
+import AdminRoutes from './Admin/AdminRoutes';
 import Evaluation from './Evaluation/Evaluation';
 
 export const LOGIN_PATH = '/login';
@@ -29,7 +29,7 @@ const Routes: React.FunctionComponent = () => {
     <Router>
       <Switch>
 
-        {/** 
+        {/**
          * System Route
          */}
         <Route exact path={LOGIN_PATH} >
@@ -39,20 +39,24 @@ const Routes: React.FunctionComponent = () => {
         <Route path={PERMISSION_DENIED} component={PermissionDenied} />
         <Route path={UNAUTHORIZED} component={Unauthorized} />
         <Route path={EXCEPTION_PATH} component={Exception} />
-      
+
         <Route path={LOGOUT_PATH} component={Logout} />
 
-        {/** 
+        {/**
          * App Route
          */}
 
-        <PrivateRoute roles={['teacher']} exact path="/" unauthorizedPath={LOGIN_PATH} 
-          component={()=> <Redirect to={{ pathname: '/evaluation' }} />} />
-        
-        <PrivateRoute path={`/admin`} component={Admin} />
+        <PrivateRoute roles={['teacher']} exact path="/" unauthorizedPath={LOGIN_PATH}
+          component={() => <Redirect to={{ pathname: '/evaluation' }} />} />
+
+
         <PrivateRoute roles={['teacher']} path={`/evaluation`} component={Evaluation} />
 
-        {/** 
+        {/* <PrivateRoute path={`/admin`} component={Admin} /> */}
+        {/* <AdminRoutes prefix='admin' /> */}
+        <PrivateRoute path={`/admin`} component={AdminRoutes} />
+
+        {/**
          * Catch all route
          */}
         <Route component={NotFound} />
