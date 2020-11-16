@@ -2,7 +2,7 @@ import {
   Controller, Post, Body, Get, Put, Delete, Param, UseFilters, HttpStatus, HttpCode, UseGuards, Request
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './users.dto';
+import { CreateUserDto, UpdateUserDto } from './users.dto';
 import { UsersEntity } from './users.entity';
 import { assignObject } from '../../common/utils';
 
@@ -33,8 +33,8 @@ export class UsersController {
   async findAll(@Request() req): Promise<UsersEntity[]> {
     const users = await this.usersService.findAll();
     return users.map(user => {
-        user['password'] = '';
-        return user;
+      user['password'] = '';
+      return user;
     });
   }
 
@@ -56,6 +56,18 @@ export class UsersController {
   @Delete(':id') // DELETE /users/123
   async delete(@Param('id') id: number): Promise<any> {
     await this.usersService.delete(id);
+    return { success: true };
+  }
+
+  @Put('table') // PUT /users/table (save whole table)
+  async updateTable(@Body() newItems: UpdateUserDto[]): Promise<any> {
+    console.log(newItems);
+    newItems.forEach( async (newItem) => {
+      console.log(newItem);
+      let user = await this.usersService.findById(newItem.id);
+      user = assignObject(user, newItem);
+      await this.usersService.createOrUpdate(user);
+    })
     return { success: true };
   }
 }
